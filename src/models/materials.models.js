@@ -1,3 +1,4 @@
+var mongoose_delete = require('mongoose-delete');
 import mongoose from 'mongoose';
 const materialsSchema = mongoose.Schema(
     {
@@ -17,11 +18,14 @@ const materialsSchema = mongoose.Schema(
             type: mongoose.ObjectId,
             ref: 'showroom',
         },
+        enabled: {
+            type: Boolean,
+        },
     },
     {
         timestamps: true,
     },
 );
-
+materialsSchema.plugin(mongoose_delete);
 const materialsModel = mongoose.model('materials', materialsSchema);
 module.exports = materialsModel;
