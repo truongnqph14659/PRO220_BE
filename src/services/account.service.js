@@ -22,10 +22,9 @@ export const updateById = async (_id, data) => {
     return await accountServiceModel.findOneAndUpdate({ _id }, data, { new: true });
 };
 
+export const getPhone = async (data) => {
+    return await accountServiceModel.findOne({ number_phone: data });
+};
 export const search = async (filter = null) => {
     return accountServiceModel.findOne({ ...filter, ...baseFilter });
-};
-
-export const getEmail = async (data) => {
-    return await accountServiceModel.findOne({ email: data });
 };

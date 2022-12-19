@@ -1,27 +1,55 @@
 import mongoose from 'mongoose';
+var mongoose_delete = require('mongoose-delete');
 
 const orderSchema = mongoose.Schema(
     {
-        date: {
+        name: {
+            type: String,
+        },
+        address: {
+            type: String,
+        },
+        number_phone: {
+            type: String,
+        },
+        status: {
+            default : 1,
+            type: Number,
+        },
+        price: {
+            type: Number,
+        },
+        subPrice: {
+            type: Number,
+        },
+        total: {
+            type: Number,
+        },
+        appointmentSchedule: {
             type: Date,
         },
         serviceType: {
-            type: String,
+            type: Number,
         },
         description: {
             type: String,
         },
-        user: {
+        eventId: {
             type: mongoose.ObjectId,
-            ref: 'user',
+            ref: 'eventId',
         },
-        cateStore: {
+        accountId: {
+            default: null,
             type: mongoose.ObjectId,
-            ref: 'showroom',
+            ref: 'accountId',
         },
-        cateService: {
+        showroomId: {
             type: mongoose.ObjectId,
-            ref: 'cateService',
+            ref: 'showroomId',
+        },
+        materialIds: {
+            type: mongoose.ObjectId,
+            ref: 'materialIds',
         },
     },
     {
@@ -29,8 +57,8 @@ const orderSchema = mongoose.Schema(
     },
 );
 
-// export default mongoose.model('Order', orderSchema) //no cai nay xoa r ma???
+orderSchema.plugin(mongoose_delete);
 
-const OrderModel = mongoose.model('OrderModel', orderSchema);
+const OrderModel = mongoose.model('Order', orderSchema);
 
 module.exports = OrderModel;

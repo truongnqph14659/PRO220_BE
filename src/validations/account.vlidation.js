@@ -7,6 +7,7 @@ export const createAccount = {
         password: Joi.string().required(),
         number_phone: Joi.number().required(),
         image: Joi.string().required(),
+        role: Joi.number(),
     }),
 };
 
@@ -14,9 +15,9 @@ export const register = {
     body: Joi.object().keys({
         name: Joi.string().required(),
         number_phone: Joi.string().required(),
-        email:Joi.string().allow(''),
+        email: Joi.string().allow(''),
         password: Joi.string().required(),
-        image:Joi.string().allow(''),
+        image: Joi.string().allow(''),
     }),
 };
 
@@ -28,7 +29,7 @@ export const getById = {
 
 export const login = {
     body: Joi.object().keys({
-        email: Joi.string().required(),
+        number_phone: Joi.string().required(),
         password: Joi.string().required(),
     }),
 };

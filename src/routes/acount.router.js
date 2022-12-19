@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { accountController } from '../controllers';
-import { login } from '../controllers/Login.controller';
+import { accountController, AuthController } from '../controllers';
 import validate from '../middlewares/validate';
 import { accountValidation } from '../validations';
 
@@ -15,7 +14,8 @@ router.put(
     validate(accountValidation.createAccount),
     accountController.updateById,
 );
-router.post('/login', validate(accountValidation.login), login);
-router.post('/register', validate(accountValidation.register), accountController.register);
+router.post('/login', validate(accountValidation.login), AuthController.login);
+router.post('/register', validate(accountValidation.register), AuthController.register);
+router.post('/refrehToken', AuthController.requestRefreshToken);
 
 export default router;

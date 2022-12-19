@@ -1,14 +1,23 @@
+import _ from 'lodash';
+import mongoose from 'mongoose';
 import {
     OrderModel
 } from "../models";
 
-export const getAll = async () => {
-    return await OrderModel.find();
+export const getAll = async (filter = {
+    deleted: false
+}) => {
+    return await OrderModel.find({
+        ...filter
+    });
 }
 
-export const getById = async (_id) => {
+export const getById = async (_id, filter = {
+    deleted: false
+}) => {
     return await OrderModel.findOne({
-        _id
+        _id,
+        ...filter
     }).exec();
 }
 
@@ -16,15 +25,30 @@ export const create = async (data) => {
     return await new OrderModel(data).save()
 }
 
-export const removeById = async (_id) => {
+export const removeById = async (_id, filter = {
+    deleted: false
+}) => {
+    const orderId = mongoose.Types.ObjectId(_id);
     return await OrderModel.findOneAndDelete({
-        _id
+        _id: orderId,
+        ...filter
     }).exec()
+}
+
+export const removeByIds = async (ids = []) => {
+    const result = ids.map(async (id) => {
+        const orderById = await getById(id);
+        if (!_.isEmpty(orderById)) {
+            removeById(id)
+        }
+    })
+    return result;
 }
 
 export const updateById = async (_id, data) => {
     return await OrderModel.findOneAndUpdate({
-        _id
+        _id,
+        deleted: false
     }, data, {
         new: true
     })
