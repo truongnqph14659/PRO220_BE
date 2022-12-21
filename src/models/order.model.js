@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { ORDER_STATUS, SEVICE_TYPE } from '../constans/order';
 var mongoose_delete = require('mongoose-delete');
 
 const orderSchema = mongoose.Schema(
@@ -13,7 +14,7 @@ const orderSchema = mongoose.Schema(
             type: String,
         },
         status: {
-            default : 1,
+            default : ORDER_STATUS.initial.value,
             type: Number,
         },
         price: {
@@ -29,6 +30,7 @@ const orderSchema = mongoose.Schema(
             type: Date,
         },
         serviceType: {
+            default : SEVICE_TYPE.SHOWROOM,
             type: Number,
         },
         description: {

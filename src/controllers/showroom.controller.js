@@ -46,6 +46,19 @@ export const removeById = async (req, res) => {
     }
 };
 
+export const removeByIds = async (req, res) => {
+    try {
+        showroomService.removeByIds(req.body.ids).then(async () => {
+            res.json({ deleted: true });
+        });
+    } catch (errors) {
+        res.status(400).json({
+            errors,
+            message: 'Đã có lỗi xảy ra xóa thất bại!',
+        });
+    }
+};
+
 export const updateById = async (req, res) => {
     try {
         const data = await showroomService.updateById(req.params.id, req.body);

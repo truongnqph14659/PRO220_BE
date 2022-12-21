@@ -11,6 +11,12 @@ export const create = {
     })
 }
 
+export const deleteIds = {
+    body: Joi.object().keys({
+        ids:Joi.array().items(Joi.string()).required()
+    })
+}
+
 export const getById = {
     params: Joi.object().keys({
         id: Joi.string().required(),
@@ -19,6 +25,7 @@ export const getById = {
 
 export const updateById = {
     body: Joi.object().keys({
+        id:Joi.string().required(),
         name: Joi.string().required(),
         phone: Joi.string().required(),
         address:Joi.string().required(),
