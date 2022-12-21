@@ -8,18 +8,8 @@ const materialsSchema = mongoose.Schema(
         price: {
             type: Number,
         },
-        quantity: {
-            type: Number,
-        },
         image: {
             type: String,
-        },
-        showroomId: {
-            type: mongoose.ObjectId,
-            ref: 'showroom',
-        },
-        enabled: {
-            type: Boolean,
         },
     },
     {

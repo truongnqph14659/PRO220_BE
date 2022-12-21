@@ -4,10 +4,7 @@ export const createMaterials = {
     body: Joi.object().keys({
         name: Joi.string().required(),
         price: Joi.number().required(),
-        quantity: Joi.number().required(),
         image: Joi.string().required(),
-        showroomId: Joi.string().required(),
-        enabled: Joi.boolean().required(),
     }),
 };
 export const getById = {
