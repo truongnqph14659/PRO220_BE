@@ -8,7 +8,6 @@ const accountSchema = mongoose.Schema(
         },
         email: {
             type: String,
-            required: true,
         },
         password: {
             type: String,
@@ -20,7 +19,6 @@ const accountSchema = mongoose.Schema(
         },
         image: {
             type: String,
-            required: true,
         },
         role: {
             type: Number,
