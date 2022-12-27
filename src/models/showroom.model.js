@@ -20,6 +20,6 @@ const showroomSchema = mongoose.Schema({
 })
 showroomSchema.index({ location: '2dsphere' })
 showroomSchema.plugin(mongoose_delete);
-const showroomModel = mongoose.model('showroom', showroomSchema);
+const showroomModel = mongoose.model('Showroom', showroomSchema);
 
 module.exports = showroomModel;

@@ -11,6 +11,7 @@ import routerMaterials from './src/routes/materials.router';
 import httpStatus from 'http-status';
 import cookiesParser from 'cookie-parser';
 import routerAccount from './src/routes/acount.router';
+import routerWarehouse from './src/routes/warehouse.router'
 const app = express();
 // const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api', orderRouter);
 app.use('/api', routerAccount);
 app.use('/api', showroomRouter);
 app.use('/api', routerMaterials);
+app.use('/api',routerWarehouse)
 
 // parse urlencoded request body
 app.use(
