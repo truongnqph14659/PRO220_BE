@@ -53,6 +53,18 @@ const orderSchema = mongoose.Schema(
             type: mongoose.ObjectId,
             ref: 'materialIds',
         },
+        //km xe chay
+        km: {
+            type: String,
+        },
+        // loai xe may
+        vehicleType: {
+            type: String,
+        },
+        //bien so xe
+        licensePlates: {
+            type: String,
+        },
     },
     {
         timestamps: true,
