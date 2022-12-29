@@ -4,11 +4,10 @@ import {
     OrderModel
 } from "../models";
 
-export const getAll = async (filter = {
-    deleted: false
-}) => {
+export const getAll = async (filter = null) => {
     return await OrderModel.find({
-        ...filter
+        ...filter,
+        deleted: false,
     });
 }
 

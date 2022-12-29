@@ -5,6 +5,14 @@ import {
 
 export const getAll = async (req, res) => {
     try {
+        const showroomId = req.query.showroomId;
+        if (showroomId) {
+            const data = await orderService.getAll({
+                showroomId
+            });
+            res.json(data);
+            return
+        }
         const data = await orderService.getAll();
         res.json(data);
     } catch (errors) {
@@ -14,6 +22,7 @@ export const getAll = async (req, res) => {
         });
     }
 };
+
 
 export const getById = async (req, res) => {
     try {
