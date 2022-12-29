@@ -1,7 +1,6 @@
 import Joi from "joi";
-import { join } from "lodash";
 
-export const validateWarehouseMaterial = {
+export const warehouseMaterial = {
     body: Joi.object().keys({
         showroomId: Joi.string().required(),
         materials:Joi.array().items(Joi.object({
@@ -11,7 +10,7 @@ export const validateWarehouseMaterial = {
     })
 }
 
-export const validateWarehouseIdShowroom = {
+export const warehouseIdShowroom = {
     params: Joi.object().keys({
         id: Joi.string().required(),
     })

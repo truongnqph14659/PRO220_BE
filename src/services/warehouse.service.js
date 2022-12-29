@@ -15,10 +15,14 @@ export const create = (data) => {
 };
 
 export const getFullWarehouseInformation = async(data)=>{
-    return warehouseModel.find({deleted: false,showroomId:{_id:data.id}}).populate({ path: 'showroomId', select: 'name' }).populate({ path: 'materials.materialId', select: ['name','quantity','price','deleted']}).exec()
+    return warehouseModel
+    .find({deleted: false,showroomId:{_id:data.id}})
+    .populate({ path: 'showroomId', select: 'name' })
+    .populate({ path: 'materials.materialId', match: { deleted: false }, select: ['name','quantity','price','deleted']})
+    .exec()
 }
 
-export const updateWarehouseQuantity = (showroomWarehouse)=>{
+export const updateWarehousesQuantity = (showroomWarehouse)=>{
     return  updateQuantityMaterial(showroomWarehouse)
 }
 
@@ -30,7 +34,7 @@ const updateQuantityMaterial = (showroomWarehouse)=>{
                 'materials.materialId': mongoose.Types.ObjectId(material.materialId)
             },
             {
-            $set:{"materials.$.quantity":material.quantity - 1}  
+                $set:{"materials.$.quantity":material.quantity - 1}  
             }
         ) 
         } catch (error) {

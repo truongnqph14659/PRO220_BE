@@ -19,7 +19,8 @@ export const create = async (req, res) => {
 export const getWarehouseRelationalReferenced = async (req,res)=>{
     try {
         const data = await  warehouseService.getFullWarehouseInformation(req.params);
-        res.json(data);
+        const handleData = data[0].materials.filter((item)=>item.materialId !== null)
+        res.json(handleData);
     } catch (error) {
         res.status(400).json({
             error: 'Đã có lỗi xảy ra không thể lấy dữ liệu!',
@@ -27,9 +28,9 @@ export const getWarehouseRelationalReferenced = async (req,res)=>{
     }
 }
 
-export const updateShowroomWarehouseQuantity = (req,res)=>{
+export const updateShowroomWarehousesQuantity = (req,res)=>{
     try {
-        const data = warehouseService.updateWarehouseQuantity(req.body);
+        const data = warehouseService.updateWarehousesQuantity(req.body);
         res.json(data);
     } catch (error) {
          res.status(400).json({
@@ -38,14 +39,4 @@ export const updateShowroomWarehouseQuantity = (req,res)=>{
     }
 }
 
-export const getFullWarehouse = async (req,res)=>{
-    try {
-         const data = await  warehouseService.getFullWarehouse();
-        res.json(data);
-    } catch (error) {
-         res.status(400).json({
-            error: 'Đã có lỗi xảy ra không thể cập nhật dữ liệu!',
-        });
-    }
-}
 

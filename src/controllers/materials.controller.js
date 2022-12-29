@@ -48,11 +48,8 @@ export const removeById = async (req, res) => {
 export const removeByIds = async (req, res) => {
     try {
         materialsService.removeByIds(req.body.ids).then(async () => {
-            console.log('req.body.ids', req.body.ids);
             if (_.get(req.body.ids, 'length', 0) === 1) {
-                console.log('req.body.ids[0]', req.body.ids[0]);
                 const dataDeleted = await materialsService.getById(req.body.ids[0]);
-                console.log('dataDeleted', dataDeleted);
                 res.json({ ids: req.body.ids, dataDeleted });
                 return;
             }

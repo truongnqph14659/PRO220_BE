@@ -4,8 +4,8 @@ import validate from "../middlewares/validate";
 import { warehouseValidation } from "../validations";
 const router = express.Router();
 
-router.get('/warehouses/:id', validate(warehouseValidation.getWarehouseIdShowroom),warehouseController.getWarehouseRelationalReferenced)
-router.post('/warehouses',validate(warehouseValidation.validateWarehouseMaterial),warehouseController.create);
-router.patch('/warehouses',validate(warehouseValidation.validateWarehouseMaterial),warehouseController.updateShowroomWarehouseQuantity)
+router.get('/warehouses/:id', validate(warehouseValidation.warehouseIdShowroom),warehouseController.getWarehouseRelationalReferenced)
+router.post('/warehouses',validate(warehouseValidation.warehouseMaterial),warehouseController.create);
+router.patch('/warehouses',validate(warehouseValidation.warehouseMaterial),warehouseController.updateShowroomWarehousesQuantity)
 
 export default router;
