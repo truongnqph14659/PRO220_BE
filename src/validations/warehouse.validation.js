@@ -7,10 +7,20 @@ export const warehouseMaterial = {
             .items(
                 Joi.object({
                     materialId: Joi.string(),
-                    quantity: Joi.number(),
+                    qty: Joi.number(),
                 }),
             )
             .required(),
+    }),
+};
+
+export const warehouseMaterialUpdateOne = {
+    body: Joi.object().keys({
+        idShowroom: Joi.string().required(),
+        material: Joi.object({
+            materialId: Joi.string(),
+            quantity: Joi.number(),
+        }).required(),
     }),
 };
 

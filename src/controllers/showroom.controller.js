@@ -1,4 +1,6 @@
 import { showroomService } from '../services';
+import { materialsService } from '../services';
+import { warehouseService } from '../services';
 
 export const getAll = async (req, res) => {
     try {
@@ -24,13 +26,24 @@ export const getById = async (req, res) => {
 
 export const create = async (req, res) => {
     try {
-        const data = await showroomService.create(req.body);
-        res.json(data);
+        const showroom = await showroomService.create(req.body);
+        const dataMaterials = await materialsService.getAll();
+        const showroomWarehouse = {
+            "showroomId":showroom._id,
+            "materials":dataMaterials.map((material)=>{
+                    return {
+                        materialId:material._id,
+                        quantity:0
+                    }
+                })
+        }
+        await warehouseService.create(showroomWarehouse)
+        res.json(showroom);
     } catch (error) {
         res.status(400).json({
             error: 'khong them duoc',
         });
-    }
+    } 
 };
 
 export const removeById = async (req, res) => {

@@ -9,11 +9,17 @@ router.get(
     validate(warehouseValidation.warehouseIdShowroom),
     warehouseController.getWarehouseRelationalReferenced,
 );
-router.post('/warehouses', validate(warehouseValidation.warehouseMaterial), warehouseController.create);
+
 router.patch(
     '/warehouses',
     validate(warehouseValidation.warehouseMaterial),
-    warehouseController.updateShowroomWarehousesQuantity,
+    warehouseController.updateQuantityManyPartInWarehouse,
+);
+
+router.patch(
+    '/warehouses/update-one',
+    validate(warehouseValidation.warehouseMaterialUpdateOne),
+    warehouseController.updateQuantityOnePartInWarehouse,
 );
 
 export default router;
