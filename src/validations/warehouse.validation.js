@@ -29,3 +29,12 @@ export const warehouseIdShowroom = {
         id: Joi.string().required(),
     }),
 };
+
+export const materialFilter = {
+    query: Joi.object().keys({
+        showroomId: Joi.string().required(),
+    }),
+    body: Joi.object().keys({
+        name: Joi.string().required(),
+    }),
+};
