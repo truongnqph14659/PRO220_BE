@@ -29,21 +29,21 @@ export const create = async (req, res) => {
         const showroom = await showroomService.create(req.body);
         const dataMaterials = await materialsService.getAll();
         const showroomWarehouse = {
-            "showroomId":showroom._id,
-            "materials":dataMaterials.map((material)=>{
-                    return {
-                        materialId:material._id,
-                        quantity:0
-                    }
-                })
-        }
-        await warehouseService.create(showroomWarehouse)
+            showroomId: showroom._id,
+            materials: dataMaterials.map((material) => {
+                return {
+                    materialId: material._id,
+                    quantity: 0,
+                };
+            }),
+        };
+        await warehouseService.create(showroomWarehouse);
         res.json(showroom);
     } catch (error) {
         res.status(400).json({
             error: 'khong them duoc',
         });
-    } 
+    }
 };
 
 export const removeById = async (req, res) => {
@@ -102,6 +102,18 @@ export const showroomNearBy = async (req, res) => {
 export const search = async (req, res) => {
     try {
         const data = await showroomService.search(req.query.value);
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({
+            error,
+            message: 'Không tìm thấy showrooms!',
+        });
+    }
+};
+
+export const searchValueInShowroom = async (req, res) => {
+    try {
+        const data = await showroomService.searchValueInShowroom(req.query);
         res.status(200).json(data);
     } catch (error) {
         res.status(400).json({

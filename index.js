@@ -11,7 +11,8 @@ import routerMaterials from './src/routes/materials.router';
 import httpStatus from 'http-status';
 import cookiesParser from 'cookie-parser';
 import routerAccount from './src/routes/acount.router';
-import routerWarehouse from './src/routes/warehouse.router'
+import routerWarehouse from './src/routes/warehouse.router';
+import routerDistrict from './src/routes/district.router';
 const app = express();
 // const app = express();
 
@@ -29,14 +30,15 @@ app.use('/api', orderRouter);
 app.use('/api', routerAccount);
 app.use('/api', showroomRouter);
 app.use('/api', routerMaterials);
-app.use('/api',routerWarehouse)
-
-// parse urlencoded request body
-app.use(
-    express.urlencoded({
-        extended: true,
-    }),
-);
+app.use('/api', routerWarehouse);
+app.use('/api', routerWarehouse);
+app.use('/api', routerDistrict),
+    // parse urlencoded request body
+    app.use(
+        express.urlencoded({
+            extended: true,
+        }),
+    );
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

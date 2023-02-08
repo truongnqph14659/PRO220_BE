@@ -20,9 +20,13 @@ const showroomSchema = mongoose.Schema({
         },
         coordinates: [],
     },
+    districtId: {
+        type: mongoose.ObjectId,
+        ref: 'District',
+    },
 });
 showroomSchema.index({
-    location: '2dsphere'
+    location: '2dsphere',
 });
 showroomSchema.plugin(mongoose_delete);
 const showroomModel = mongoose.model('Showroom', showroomSchema);

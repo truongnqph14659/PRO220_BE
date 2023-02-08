@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { showroomModel } from '../models';
+import _ from 'lodash';
 export const getAll = () => {
     return showroomModel.find({ deleted: false });
 };
@@ -45,7 +46,7 @@ export const showroomNearBy = (data) => {
                     coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
                 },
                 key: 'location',
-                maxDistance: parseInt(data.dist),
+                maxDistance: parseInt(data.dist) * 1000,
                 distanceField: 'calculated',
                 spherical: true,
             },
@@ -53,12 +54,61 @@ export const showroomNearBy = (data) => {
     ]);
 };
 
-export const search = async (text) => {
-    //i : khong phan biet chu hoa, chu thuong
-    return showroomModel.find({
-        $or: [
-            { name: new RegExp(text, 'i'), deleted: false },
-            { address: new RegExp(text, 'i'), deleted: false },
-        ],
-    });
+// export const search = async (text) => {
+//     //i : khong phan biet chu hoa, chu thuong
+//     return showroomModel.find({
+//         $or: [
+//             { name: new RegExp(text, 'i'), deleted: false },
+//             { address: new RegExp(text, 'i'), deleted: false },
+//         ],
+//     });
+// };
+
+const filterShowroomAddress = (showrooms, address) => {
+    return showrooms.filter((showroom) => showroom.address.toLowerCase().includes(address.toLowerCase()));
+};
+
+export const searchValueInShowroom = async (dataSearch) => {
+    const isDistrict = _.has(dataSearch, 'district');
+    const isAddress = _.has(dataSearch, 'address');
+
+    if (isDistrict && isAddress) {
+        const listShowroom = await showroomModel
+            .find({ districtId: dataSearch.district })
+            .select({ _id: 1, name: 1, phone: 1, address: 1, images: 1, deleted: 1 });
+        return filterShowroomAddress(listShowroom, dataSearch.address);
+    } else if (isDistrict) {
+        const listShowroom = await showroomModel
+            .find({ districtId: dataSearch.district })
+            .select({ _id: 1, name: 1, phone: 1, address: 1, images: 1, deleted: 1 });
+        return listShowroom;
+    } else if (isAddress) {
+        const listShowroom = await showroomModel.aggregate([
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    phone: 1,
+                    address: 1,
+                    images: 1,
+                    deleted: 1,
+                },
+            },
+        ]);
+        return filterShowroomAddress(listShowroom, dataSearch.address);
+    } else {
+        const listShowroom = await showroomModel.aggregate([
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    phone: 1,
+                    address: 1,
+                    images: 1,
+                    deleted: 1,
+                },
+            },
+        ]);
+        return listShowroom;
+    }
 };
