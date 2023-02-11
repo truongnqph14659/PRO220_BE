@@ -1,5 +1,7 @@
 import bcyrpt from 'bcrypt';
 import { accountServices } from '../services';
+import _ from 'lodash';
+import { STATUS_TYPE } from '../constans/status';
 
 export const getAll = async (req, res) => {
     try {
@@ -43,7 +45,18 @@ export const removeById = async (req, res) => {
 
 export const updateById = async (req, res) => {
     try {
-        const data = await accountServices.updateById(req.params.id, req.body);
+        let value = {};
+        if (_.has(req.body, 'password')) {
+            value = {
+                ...req.body,
+                password: bcyrpt.hashSync(req.body.password, 10),
+            };
+        } else {
+            value = {
+                ...req.body,
+            };
+        }
+        const data = await accountServices.updateById(req.params.id, value);
         res.json(data);
     } catch (error) {
         res.status(400).json({
@@ -56,6 +69,19 @@ export const getById = async (req, res) => {
     try {
         const data = await accountServices.getById(req.params.id);
         res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            message: error,
+        });
+    }
+};
+
+export const changePassword = async (req, res) => {
+    try {
+        const data = await accountServices.getById(req.params.id);
+        const compareSync = bcyrpt.compareSync(req.body.currentPassword, _.get(data, 'password'));
+        const status = compareSync ? STATUS_TYPE.SUCCESS : STATUS_TYPE.ERROR;
+        res.json(status);
     } catch (error) {
         res.status(400).json({
             message: error,

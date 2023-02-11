@@ -54,6 +54,22 @@ export const showroomNearBy = (data) => {
     ]);
 };
 
+export const compareShowroomNearBy = (data) => {
+    return showroomModel.aggregate([
+        {
+            $geoNear: {
+                near: {
+                    type: 'Point',
+                    coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
+                },
+                key: 'location',
+                distanceField: 'calculated',
+                spherical: true,
+            },
+        },
+    ]);
+};
+
 // export const search = async (text) => {
 //     //i : khong phan biet chu hoa, chu thuong
 //     return showroomModel.find({

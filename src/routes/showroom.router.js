@@ -32,4 +32,6 @@ router
 
 router.get('/showroom/search?', showroomController.searchValueInShowroom);
 
+router.route('/showrooms/user-check').post(showroomController.compareShowroomNearBy);
+
 export default router;

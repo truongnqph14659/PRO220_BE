@@ -16,6 +16,8 @@
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dateformat": "^4.6.3",
     "express": "^4.18.1",
     "http-status": "^1.5.3",
     "joi": "^17.7.0",
@@ -25,7 +27,11 @@
     "mongoose-delete": "^0.5.4",
     "morgan": "^1.10.0",
     "prettier": "2.8.0",
-    "socket.io": "^4.5.2"
+    "qs": "^6.11.0",
+    "socket.io": "^4.5.2",
+    "sortobject": "^4.16.0",
+    "url": "^0.11.0",
+    "vn-payments": "^1.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
