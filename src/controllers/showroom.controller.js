@@ -90,7 +90,24 @@ export const showroomNearBy = async (req, res) => {
         if (listShowroom.length !== 0) {
             res.json(listShowroom);
         } else {
-            res.json({ message: 'không tìm thấy cửa hàng nào gần bạn' });
+            res.json([]);
+        }
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi tìm kiếm!',
+        });
+    }
+};
+
+export const compareShowroomNearBy = async (req, res) => {
+    try {
+        const dataShowrooms = await showroomService.compareShowroomNearBy(req.body);
+        const findShowroom = dataShowrooms.find((showroom) => showroom._id == req.body.showroomId);
+        console.log(findShowroom);
+        if (Math.ceil(findShowroom.calculated + 1000) <= 5000) {
+            res.json(true);
+        } else {
+            res.json(false);
         }
     } catch (error) {
         res.status(400).json({

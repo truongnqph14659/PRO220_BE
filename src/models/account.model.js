@@ -20,6 +20,9 @@ const accountSchema = mongoose.Schema(
         image: {
             type: String,
         },
+        showroomId:{
+            type:String,
+        },
         role: {
             type: Number,
         },

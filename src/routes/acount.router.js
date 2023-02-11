@@ -11,11 +11,11 @@ router.delete('/accounts/:id', validate(accountValidation.getById), accountContr
 router.put(
     '/accounts/:id',
     validate(accountValidation.getById),
-    validate(accountValidation.createAccount),
     accountController.updateById,
 );
 router.post('/login', validate(accountValidation.login), AuthController.login);
 router.post('/register', validate(accountValidation.register), AuthController.register);
 router.post('/refrehToken', AuthController.requestRefreshToken);
+router.post('/chagePassword/:id', accountController.changePassword);
 
 export default router;

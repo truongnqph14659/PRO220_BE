@@ -20,7 +20,8 @@ export const verifyToken=(req,res,next)=>{
 
 export const verifyAndAdminAuth = (req,res,next)=>{
     verifyToken(req,res,()=>{
-        if (req.user.role == 1) {
+        if ([1,2].includes(req.user.role)) {
+            req.user = req.user
             next()
         }else{
            return res.status(403).json({
