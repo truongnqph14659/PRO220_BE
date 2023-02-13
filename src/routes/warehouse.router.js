@@ -17,6 +17,12 @@ router.patch(
 );
 
 router.patch(
+    '/warehouses/take-part-out',
+    validate(warehouseValidation.warehouseMaterialUpdateOne),
+    warehouseController.updateQuantityBackToWarehouse,
+);
+
+router.patch(
     '/warehouses/update-one',
     validate(warehouseValidation.warehouseMaterialUpdateOne),
     warehouseController.updateQuantityOnePartInWarehouse,

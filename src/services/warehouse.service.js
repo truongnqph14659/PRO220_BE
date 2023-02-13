@@ -68,6 +68,25 @@ const updateQuantityMaterial = async (dataObj) => {
     }
 };
 
+export const updateQuantityMaterialBack = async (dataObj) => {
+    try {
+        const dataWarehouse = await warehouseModel.findOne({ showroomId: dataObj.idShowroom });
+        const material = dataWarehouse.materials.find((part) => part.materialId == dataObj.material.materialId);
+        const dataUpdate = await warehouseModel.updateOne(
+            {
+                showroomId: mongoose.Types.ObjectId(dataObj.idShowroom),
+                'materials.materialId': mongoose.Types.ObjectId(dataObj.material.materialId),
+            },
+            {
+                $set: { 'materials.$.quantity': dataObj.material.quantity + material.quantity },
+            },
+        );
+        return dataUpdate;
+    } catch (error) {
+        return error;
+    }
+};
+
 const searchMaterial = (materials, name) => {
     return materials.filter((material) => material.materialId.name.toLowerCase().includes(name.toLowerCase()));
 };

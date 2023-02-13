@@ -35,6 +35,16 @@ export const updateQuantityOnePartInWarehouse = (req, res) => {
     }
 };
 
+export const updateQuantityBackToWarehouse = (req, res) => {
+    try {
+        const data = warehouseService.updateQuantityMaterialBack(req.body);
+        res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            error: 'Đã có lỗi xảy ra không thể cập nhật dữ liệu!',
+        });
+    }
+};
 // filterWarehouseMaterial
 
 export const filterMaterials = async (req, res) => {
