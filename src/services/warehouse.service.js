@@ -99,3 +99,7 @@ export const filterWarehouseMaterial = async (data) => {
     });
     return searchMaterial(listData.materials, data.body.name);
 };
+
+export const insertManyMaterialWarehouse = (newMaterial) => {
+    return warehouseModel.updateMany({}, { $push: { materials: { ...newMaterial } } });
+};

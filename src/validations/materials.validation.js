@@ -5,6 +5,7 @@ export const createMaterials = {
         name: Joi.string().required(),
         price: Joi.number().required(),
         image: Joi.string().required(),
+        quantity: Joi.number().allow('', null),
     }),
 };
 export const getById = {
@@ -15,5 +16,11 @@ export const getById = {
 export const deleteByIds = {
     body: Joi.object().keys({
         ids: Joi.array().items(Joi.string()),
+    }),
+};
+
+export const filter = {
+    query: Joi.object().keys({
+        value: Joi.string().required(),
     }),
 };
