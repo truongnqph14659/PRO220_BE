@@ -17,5 +17,5 @@ const materialsSchema = mongoose.Schema(
     },
 );
 materialsSchema.plugin(mongoose_delete);
-const materialsModel = mongoose.model('materials', materialsSchema);
+const materialsModel = mongoose.model('Material', materialsSchema);
 module.exports = materialsModel;

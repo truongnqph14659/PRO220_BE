@@ -5,3 +5,5 @@ module.exports.showroomService = require('./showroom.service');
 module.exports.materialsService = require('./materials.service');
 module.exports.warehouseService = require('./warehouse.service');
 module.exports.districtService = require('./district.service');
+module.exports.roleService = require('./role.service');
+module.exports.permissionService = require('./permission.service');

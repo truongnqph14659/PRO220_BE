@@ -14,6 +14,9 @@ import routerAccount from './src/routes/acount.router';
 import routerWarehouse from './src/routes/warehouse.router';
 import routerDistrict from './src/routes/district.router';
 import routerPayment from './src/routes/paymentVnpay.router';
+import routerRole from './src/routes/role.router';
+import routerPermission from './src/routes/permission.router';
+
 const app = express();
 // const app = express();
 
@@ -34,13 +37,16 @@ app.use('/api', showroomRouter);
 app.use('/api', routerMaterials);
 app.use('/api', routerWarehouse);
 app.use('/api', routerWarehouse);
-app.use('/api', routerDistrict),
-    // parse urlencoded request body
-    app.use(
-        express.urlencoded({
-            extended: true,
-        }),
-    );
+app.use('/api', routerDistrict);
+app.use('/api', routerRole);
+app.use('/api', routerPermission);
+
+// parse urlencoded request body
+app.use(
+    express.urlencoded({
+        extended: true,
+    }),
+);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

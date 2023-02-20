@@ -6,3 +6,5 @@ module.exports.materialController = require('./materials.controller');
 module.exports.AuthController = require('./auth.controller');
 module.exports.warehouseController = require('./warehouse.controller');
 module.exports.districtController = require('./district.controller');
+module.exports.roleController = require('./role.controller');
+module.exports.permissionController = require('./permission.controller');
