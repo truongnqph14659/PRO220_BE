@@ -73,3 +73,11 @@ export const updateByIdOrder = {
         status: Joi.number().required(),
     }),
 };
+
+export const totalOrderStatistical = {
+    body: Joi.object().keys({
+        type: Joi.string().required(),
+        showroomId: Joi.string().required(),
+        time: Joi.alternatives().try(Joi.date(), Joi.array().items(Joi.date())),
+    }),
+};

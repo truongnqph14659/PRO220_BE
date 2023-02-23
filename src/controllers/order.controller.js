@@ -1,5 +1,8 @@
 import _ from 'lodash';
+import mongoose from 'mongoose';
+import { OrderModel } from '../models';
 import { orderService } from '../services';
+import { getStartAndEndOfByTime } from '../utils/time';
 
 export const getAll = async (req, res) => {
     try {
@@ -7,11 +10,12 @@ export const getAll = async (req, res) => {
         if (showroomId) {
             const data = await orderService.getAll({
                 showroomId,
+                ...req.body,
             });
             res.json(data);
             return;
         }
-        const data = await orderService.getAll();
+        const data = await orderService.getAll(req.body);
         res.json(data);
     } catch (errors) {
         res.status(400).json({
@@ -136,4 +140,36 @@ export const getUserOrders = async (req, res) => {
         const data = await orderService.getUserOrders(req.params.accountId);
         res.json(data);
     } catch (error) {}
+};
+
+export const getOrderTotal = async (req, res) => {
+    try {
+        const { start, end } = getStartAndEndOfByTime(req.body.type, req.body.time);
+        const data = await OrderModel.aggregate([
+            {
+                $match: {
+                    createdAt: {
+                        $lt: end,
+                        $gt: start,
+                    },
+                    showroomId: mongoose.Types.ObjectId(req.body.showroomId),
+                },
+            },
+            {
+                $project: {
+                    status: 1,
+                    createdAt: 1,
+                },
+            },
+            {
+                $sort: { createdAt: 1 },
+            },
+        ]);
+        res.status(200).json(data);
+    } catch (errors) {
+        res.status(400).json({
+            errors,
+            message: 'Đã có lỗi xảy ra cập nhật thất bại!',
+        });
+    }
 };

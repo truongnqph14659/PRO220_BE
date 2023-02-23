@@ -6,6 +6,7 @@ import { orderValidation } from '../validations';
 const router = express.Router();
 
 router.get('/orders', orderController.getAll);
+router.post('/orders-filter', orderController.getAll);
 router.get('/orders/:id', validate(orderValidation.getById), orderController.getById);
 router.post('/orders', validate(orderValidation.createOrder), orderController.create);
 router.delete('/orders/:id', validate(orderValidation.getById), orderController.removeById);
@@ -20,10 +21,8 @@ router.patch('/order-status/:id', validate(orderValidation.updateOrderStatus), o
 //customer
 router.post('/order-by-customer', validate(orderValidation.createOrderByCustomer), orderController.create);
 router.get('/orders-customer/:accountId', orderController.getUserOrders);
-router.patch(
-    '/orders-customer/:id',
-    validate(orderValidation.updateByIdOrder),
-    orderController.updateById,
-);
+router.patch('/orders-customer/:id', validate(orderValidation.updateByIdOrder), orderController.updateById);
 
+// thong ke
+router.post('/statistical/order-total', validate(orderValidation.totalOrderStatistical), orderController.getOrderTotal);
 export default router;
