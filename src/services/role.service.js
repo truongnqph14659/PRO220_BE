@@ -71,3 +71,11 @@ export const listRolePermission = (name) => {
         },
     ]);
 };
+
+export const updateRolePermission = async (dataUpdate) => {
+    return await roleModel.findByIdAndUpdate(
+        dataUpdate.roleId,
+        { $set: { permissions: dataUpdate.permissions } },
+        { new: true },
+    );
+};

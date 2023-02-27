@@ -13,3 +13,17 @@ export const permission = {
             .required(),
     }),
 };
+
+export const permissionUpdate = {
+    body: Joi.object().keys({
+        idCate: Joi.string().required(),
+        listPermissions: Joi.array()
+            .items(
+                Joi.object({
+                    name: Joi.string(),
+                    code: Joi.number(),
+                }),
+            )
+            .required(),
+    }),
+};

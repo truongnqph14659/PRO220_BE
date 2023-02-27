@@ -39,3 +39,15 @@ export const listRolePermission = async (req, res) => {
         });
     }
 };
+
+export const updateRolePermission = async (req, res) => {
+    const dataUpdate = await roleService.updateRolePermission(req.body);
+    const roleData = await roleService.listRolePermission(dataUpdate.name);
+    res.json(roleData);
+    try {
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi, cập nhật vai trò thất bại',
+        });
+    }
+};

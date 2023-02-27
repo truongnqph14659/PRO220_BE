@@ -25,3 +25,14 @@ export const list = async (req, res) => {
         });
     }
 };
+
+export const update = async (req, res) => {
+    try {
+        const data = await permissionService.updatePermission(req.body);
+        res.json({ messege: 'success' });
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi, không thể cập nhật dữ liệu',
+        });
+    }
+};

@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/permission', validate(PermissionValidation.permission), permissionController.create);
 router.get('/permission', permissionController.list);
+router.patch('/permission', validate(PermissionValidation.permissionUpdate), permissionController.update);
 
 export default router;

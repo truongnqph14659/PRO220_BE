@@ -50,3 +50,28 @@ export const listPermissions = () => {
         },
     ]);
 };
+
+export const updatePermission = async (data) => {
+    const listCate = await permissionModel.find({ parent: data.idCate });
+    listCate.forEach((item) => {
+        const dataChecked = handleIsData(data.listPermissions, { code: item.code });
+        if (!dataChecked) {
+            handleDelete(item);
+        }
+    });
+
+    data.listPermissions.forEach(async (permission) => {
+        const dataChecked = handleIsData(listCate, { code: permission.code });
+        if (!dataChecked) {
+            await handlePermission({ name: permission.name, parent: data.idCate, code: permission.code });
+        }
+    });
+};
+
+const handleIsData = (listPermission, checkObj) => {
+    return _.some(listPermission, checkObj);
+};
+
+const handleDelete = async (data) => {
+    return await permissionModel.deleteOne({ _id: data._id });
+};
