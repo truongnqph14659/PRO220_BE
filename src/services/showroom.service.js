@@ -24,6 +24,7 @@ export const create = (data) => {
             type: 'Point',
             coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
         },
+        districtId: data.districtId
     };
     return new showroomModel(dataShowroom).save();
 };
