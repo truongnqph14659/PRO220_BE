@@ -14,11 +14,8 @@ export const create = async (req, res) => {
 
 export const list = async (req, res) => {
     try {
-        const data = await permissionService.listPermissions();
-        const handlePermission = data.map((permission) => {
-            return { ...permission, nameCate: permission.nameCate[0] };
-        });
-        res.status(200).json(handlePermission);
+        const dataPermissions = await handleShowPermission();
+        res.status(200).json(dataPermissions);
     } catch (error) {
         res.status(400).json({
             error: 'lỗi, không thể lấy dữ liệu',
@@ -28,11 +25,20 @@ export const list = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
-        const data = await permissionService.updatePermission(req.body);
-        res.json({ messege: 'success' });
+        await permissionService.updatePermission(req.body);
+        const dataPermissions = await handleShowPermission();
+        res.json(dataPermissions);
     } catch (error) {
         res.status(400).json({
             error: 'lỗi, không thể cập nhật dữ liệu',
         });
     }
+};
+
+const handleShowPermission = async () => {
+    const data = await permissionService.listPermissions();
+    const handlePermission = data.map((permission) => {
+        return { ...permission, nameCate: permission.nameCate[0] };
+    });
+    return handlePermission;
 };
