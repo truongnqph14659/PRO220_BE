@@ -3,8 +3,9 @@ import { permissionService } from '../services';
 
 export const create = async (req, res) => {
     try {
-        const permissionData = await permissionService.createPermission(req.body);
-        res.json({ messege: 'success' });
+        await permissionService.createPermission(req.body);
+        const permissionData = await handleShowPermission();
+        res.status(200).json(permissionData);
     } catch (error) {
         res.status(400).json({
             error: 'tạo quyền thất bại',
@@ -26,8 +27,7 @@ export const list = async (req, res) => {
 export const update = async (req, res) => {
     try {
         await permissionService.updatePermission(req.body);
-        const dataPermissions = await handleShowPermission();
-        res.json(dataPermissions);
+        res.json({ messege: 'success' });
     } catch (error) {
         res.status(400).json({
             error: 'lỗi, không thể cập nhật dữ liệu',
