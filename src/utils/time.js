@@ -25,8 +25,8 @@ export const getStartAndEndOfByTime = (type, time) => {
             };
         default:
             return {
-                start: time[0],
-                end: time[1],
+                start: dayjs(time[0])['$d'],
+                end: dayjs(time[1])['$d'],
             };
     }
 };

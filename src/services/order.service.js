@@ -6,6 +6,8 @@ export const getAll = async (filter) => {
     return await OrderModel.find({
         ...filter,
         deleted: false,
+    }).sort({
+        createdAt: -1,
     });
 };
 

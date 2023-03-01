@@ -24,5 +24,11 @@ router.get('/orders-customer/:accountId', orderController.getUserOrders);
 router.patch('/orders-customer/:id', validate(orderValidation.updateByIdOrder), orderController.updateById);
 
 // thong ke
-router.post('/statistical/order-total', validate(orderValidation.totalOrderStatistical), orderController.getOrderTotal);
+router.post('/order/statistical-total', validate(orderValidation.totalOrderStatistical), orderController.getOrderTotal);
+router.post(
+    '/order/statistical-revenue',
+    validate(orderValidation.totalOrderStatistical),
+    orderController.getOrderRevenua,
+);
+
 export default router;
