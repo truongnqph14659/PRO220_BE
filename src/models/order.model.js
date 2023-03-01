@@ -46,21 +46,31 @@ const orderSchema = mongoose.Schema(
         accountId: {
             default: null,
             type: mongoose.ObjectId,
-            ref: 'accountId',
+            ref: 'Account',
         },
         showroomId: {
             type: mongoose.ObjectId,
-            ref: 'showroomId',
+            ref: 'Showroom',
         },
         materialIds: {
-            type : Array,
-            default : [],
-            ref : 'material'
-        },
-        materials: {
             type: Array,
             default: [],
+            ref: 'Material',
         },
+        materials: [
+            {
+                materialId: {
+                    type: mongoose.ObjectId,
+                    ref: 'Material',
+                },
+                qty: {
+                    type: Number,
+                },
+                price: {
+                    type: Number,
+                },
+            },
+        ],
         reasons: {
             type: Array,
             default: [],
