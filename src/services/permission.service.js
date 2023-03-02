@@ -1,13 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose, { Promise } from 'mongoose';
 import { permissionModel } from '../models';
 import _ from 'lodash';
 
 export const createPermission = async (permission) => {
     const resData = await handlePermission({ name: permission.name, parent: null });
+    const lengthData = _.size(permission.listPermissions);
     permission.listPermissions.forEach(async (permissItem) => {
         await handlePermission({ name: permissItem.name, parent: resData._id, code: permissItem.code });
     });
-    return;
+    return new Promise((resolve, reject) => {
+        return setTimeout(() => resolve({ messege: 'success' }), lengthData * 200);
+    });
 };
 
 const handlePermission = (data) => {
