@@ -3,8 +3,16 @@ import { roleService } from '../services';
 
 export const create = async (req, res) => {
     try {
-        const roleData = await roleService.createRole(req.body);
-        res.json(roleData);
+        const listRoles = await fetchApiRole();
+        const handleRoleName = listRoles.map((role) => {
+            return role.name.toLowerCase();
+        });
+        if (!_.some(handleRoleName, (role) => role == req.body.name.toLowerCase())) {
+            const roleData = await roleService.createRole(req.body);
+            res.json(roleData);
+        } else {
+            res.status(409).json({ messege: 'Đã tồn tại vai trò này trong hê thống' });
+        }
     } catch (error) {
         res.status(400).json({
             error: 'tạo vai trò thất bại',
@@ -14,7 +22,7 @@ export const create = async (req, res) => {
 
 export const list = async (req, res) => {
     try {
-        const roleData = await roleService.listRole();
+        const roleData = await fetchApiRole();
         const handleRole = roleData.map((role) => {
             return {
                 id: role._id,
@@ -50,4 +58,9 @@ export const updateRolePermission = async (req, res) => {
             error: 'lỗi, cập nhật vai trò thất bại',
         });
     }
+};
+
+const fetchApiRole = async () => {
+    const dataRole = await roleService.listRole();
+    return dataRole;
 };

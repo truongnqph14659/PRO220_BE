@@ -3,10 +3,18 @@ import { permissionService } from '../services';
 
 export const create = async (req, res) => {
     try {
-        const addPermission = await permissionService.createPermission(req.body);
-        if (addPermission.messege == 'success') {
-            const data = await permissionService.listPermissions();
-            res.status(200).json(data);
+        const listPermission = await fetchApiPermission();
+        const handlePermissionName = listPermission.map((permission) => {
+            return permission.nameCate[0].toLowerCase();
+        });
+        if (!_.some(handlePermissionName, (permission) => permission == req.body.name.toLowerCase())) {
+            const addPermission = await permissionService.createPermission(req.body);
+            if (addPermission.messege == 'success') {
+                const data = await permissionService.listPermissions();
+                res.status(200).json(data);
+            }
+        } else {
+            res.status(409).json({ messege: 'Đã tồn tại danh mục quyền này trong hê thống' });
         }
     } catch (error) {
         res.status(400).json({
@@ -17,7 +25,7 @@ export const create = async (req, res) => {
 
 export const list = async (req, res) => {
     try {
-        const dataPermissions = await permissionService.listPermissions();
+        const dataPermissions = await fetchApiPermission();
         res.status(200).json(dataPermissions);
     } catch (error) {
         res.status(400).json({
@@ -48,4 +56,9 @@ export const update = async (req, res) => {
             error: 'lỗi, không thể cập nhật dữ liệu',
         });
     }
+};
+
+const fetchApiPermission = async () => {
+    const dataPermission = await permissionService.listPermissions();
+    return dataPermission;
 };
