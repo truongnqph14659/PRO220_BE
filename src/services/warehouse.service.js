@@ -103,3 +103,68 @@ export const filterWarehouseMaterial = async (data) => {
 export const insertManyMaterialWarehouse = (newMaterial) => {
     return warehouseModel.updateMany({}, { $push: { materials: { ...newMaterial } } });
 };
+
+export const GetExchangeQuantityWarehouse = async (idShowroom) => {
+    const populateShowroom = await warehouseModel.aggregate([
+        {
+            $match: {
+                showroomId: { $not: { $eq: idShowroom } },
+            },
+        },
+        {
+            $lookup: {
+                from: 'showrooms',
+                localField: 'showroomId',
+                foreignField: '_id',
+                as: 'dataShowroom',
+            },
+        },
+        {
+            $unwind: '$dataShowroom',
+        },
+        {
+            $lookup: {
+                from: 'districts',
+                localField: 'dataShowroom.districtId',
+                foreignField: '_id',
+                as: 'dataDistrict',
+            },
+        },
+        {
+            $unwind: '$dataDistrict',
+        },
+    ]);
+    return populateShowroom;
+};
+
+export const exchangeQuantityMaterial = async (dataObj) => {
+    console.log(dataObj);
+    try {
+        const update = await warehouseModel.updateOne(
+            {
+                showroomId: mongoose.Types.ObjectId(dataObj.idShowroomExchange),
+                'materials.materialId': mongoose.Types.ObjectId(dataObj.idPart),
+            },
+            {
+                $set: { 'materials.$.quantity': dataObj.quantityCurrentChange },
+            },
+        );
+        const dataUpdate = await warehouseModel.updateOne(
+            {
+                showroomId: mongoose.Types.ObjectId(dataObj.idCurrentShowroom),
+                'materials.materialId': mongoose.Types.ObjectId(dataObj.idPart),
+            },
+            {
+                $set: { 'materials.$.quantity': makeCaculateQuantity(dataObj) },
+            },
+        );
+        return dataUpdate;
+    } catch (error) {
+        return error;
+    }
+};
+
+const makeCaculateQuantity = (dataSoures) => {
+    const result = dataSoures.max - dataSoures.quantityCurrentChange;
+    return dataSoures.quantityCurrent + result;
+};

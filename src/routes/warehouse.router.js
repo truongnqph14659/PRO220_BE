@@ -28,5 +28,8 @@ router.patch(
     warehouseController.updateQuantityOnePartInWarehouse,
 );
 
+router.get('/warehouse-exchange', warehouseController.getDataExchangePart);
+router.patch('/warehouse-exchange', warehouseController.exchangePartQuantity);
+
 router.post('/warehouse/search?', validate(warehouseValidation.materialFilter), warehouseController.filterMaterials);
 export default router;
