@@ -3,9 +3,9 @@ import Joi from 'joi';
 export const createAccount = {
     body: Joi.object().keys({
         name: Joi.string().required(),
-        email: Joi.string().required(),
+        number_phone: Joi.string().required(),
+        email: Joi.string().allow(''),
         password: Joi.string().required(),
-        number_phone: Joi.number().required(),
         roleId: Joi.string().required(),
         showroomId: Joi.string(),
     }),

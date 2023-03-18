@@ -21,18 +21,19 @@ export const getAll = async (req, res) => {
 
 export const create = async (req, res) => {
     try {
-        const Number_Phone = await accountServices.getPhone(req.body.number_phone);
-        if (Number_Phone) {
-            return res.json({
-                message: 'Số điện thoại đã tồn tại',
-            });
+        const checkPhoneNumber = await accountServices.search({ number_phone: req.body.number_phone });
+        if (!checkPhoneNumber) {
+            const passwordVerify = bcyrpt.hashSync(req.body.password, 10);
+            const data = await accountServices.create({ ...req.body, password: passwordVerify });
+            return res.status(200).json({ data, message: 'Tạo tài khoản thành công!' });
         }
-        const passwordVerify = bcyrpt.hashSync(req.body.password, 10);
-        const data = await accountServices.create({ ...req.body, password: passwordVerify });
-        res.json(data);
+        res.status(400).json({
+            message: 'Tài khoản đã tồn tại trong hệ thống!',
+        });
     } catch (error) {
         res.status(400).json({
-            message: error,
+            error,
+            message: 'Đăng ký tài khoản thất bại! Vui lòng thử lại.',
         });
     }
 };

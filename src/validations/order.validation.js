@@ -4,7 +4,7 @@ import { SEVICE_TYPE } from '../constans/order';
 export const createOrder = {
     body: Joi.object().keys({
         description: Joi.string().allow('', null),
-        appointmentSchedule: Joi.date().required(),
+        appointmentSchedule: Joi.date().allow('', null),
         serviceType: Joi.number().required().default(SEVICE_TYPE.SHOWROOM),
         email: Joi.string().allow('', null),
         price: Joi.number().allow('', null),
@@ -13,9 +13,6 @@ export const createOrder = {
         showroomId: Joi.string().allow('', null),
         name: Joi.string().required(),
         number_phone: Joi.string().required(),
-        address: Joi.string().allow('', null),
-        km: Joi.string().allow('', null),
-        vehicleType: Joi.number().allow(1, 2, 3, 4),
         status: Joi.number().required().allow(2),
         licensePlates: Joi.string().allow('', null),
         reasons: Joi.array().items(Joi.string()).empty(),
@@ -51,16 +48,13 @@ export const deleteByIds = {
 export const createOrderByCustomer = {
     body: Joi.object().keys({
         description: Joi.string().allow('', null),
-        appointmentSchedule: Joi.date().required(),
+        appointmentSchedule: Joi.date().allow('', null),
         serviceType: Joi.number().required().default(SEVICE_TYPE.SHOWROOM),
         accountId: Joi.string().allow('', null),
         email: Joi.string().allow('', null),
         name: Joi.string().required(),
         number_phone: Joi.string().required(),
         showroomId: Joi.string().allow('', null),
-        address: Joi.string().allow('', null),
-        km: Joi.string().allow('', null),
-        vehicleType: Joi.number().allow(1, 2, 3, 4),
         licensePlates: Joi.string().allow('', null),
     }),
 };

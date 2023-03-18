@@ -19,7 +19,7 @@ router.patch(
 );
 router.patch('/order-status/:id', validate(orderValidation.updateOrderStatus), orderController.updateById);
 //customer
-router.post('/order-by-customer', validate(orderValidation.createOrderByCustomer), orderController.create);
+router.post('/order-by-customer', orderController.create);
 router.get('/orders-customer/:accountId', orderController.getUserOrders);
 router.patch('/orders-customer/:id', validate(orderValidation.updateByIdOrder), orderController.updateById);
 
