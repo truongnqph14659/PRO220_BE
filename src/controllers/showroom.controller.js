@@ -103,8 +103,7 @@ export const compareShowroomNearBy = async (req, res) => {
     try {
         const dataShowrooms = await showroomService.compareShowroomNearBy(req.body);
         const findShowroom = dataShowrooms.find((showroom) => showroom._id == req.body.showroomId);
-        console.log(findShowroom);
-        if (Math.ceil(findShowroom.calculated + 1000) <= 5000) {
+        if (Math.ceil(findShowroom.calculated + 1000) <= 2000) {
             res.json(true);
         } else {
             res.json(false);

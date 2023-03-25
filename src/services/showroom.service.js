@@ -24,7 +24,7 @@ export const create = (data) => {
             type: 'Point',
             coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
         },
-        districtId: data.districtId
+        districtId: data.districtId,
     };
     return new showroomModel(dataShowroom).save();
 };
@@ -47,7 +47,7 @@ export const showroomNearBy = (data) => {
                     coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
                 },
                 key: 'location',
-                maxDistance: parseInt(data.dist) * 1000,
+                maxDistance: 1000,
                 distanceField: 'calculated',
                 spherical: true,
             },
