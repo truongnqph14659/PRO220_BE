@@ -44,7 +44,6 @@ const orderSchema = mongoose.Schema(
             ref: 'eventId',
         },
         accountId: {
-            default: null,
             type: mongoose.ObjectId,
             ref: 'Account',
         },

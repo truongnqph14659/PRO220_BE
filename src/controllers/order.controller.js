@@ -56,12 +56,16 @@ export const getById = async (req, res) => {
 
 export const create = async (req, res) => {
     try {
-        const dataAccount = await accountServices.getPhone(req.body.number_phone);
-        if (dataAccount) {
-            const data = await orderService.create({ ...req.body, accountId: dataAccount._id });
+        if (req.body.accountId != null) {
+            const data = await orderService.create({ ...req.body, accountId: req.body.accountId });
             res.status(200).json(data);
         } else {
-            res.status(200).json({ message: true, ...req.body });
+            const dataAcc = await accountServices.create({
+                name: req.body.name,
+                number_phone: req.body.number_phone,
+            });
+            const dataOrder = await orderService.create({ ...req.body, accountId: dataAcc._id });
+            res.status(200).json(dataOrder);
         }
     } catch (errors) {
         res.status(400).json({
@@ -252,4 +256,31 @@ export const getOrderRevenua = async (req, res) => {
             message: 'Đã có lỗi xảy ra cập nhật thất bại!',
         });
     }
+};
+
+export const checkPhoneInSystem = async (req, res) => {
+    try {
+        const phone = await checkPhone(req.body.number_phone);
+        if (null) {
+            res.status(200).json({
+                isPhoneInSystem: false,
+            });
+        } else {
+            res.status(200).json({
+                isPhoneInSystem: true,
+                name: phone.name,
+                accountId: phone.id,
+                email: phone.email,
+                number_phone: phone.number_phone,
+            });
+        }
+    } catch (error) {
+        res.status(400).json({
+            message: 'Đã có lỗi xảy ra!',
+        });
+    }
+};
+
+const checkPhone = async (phone) => {
+    return await accountServices.getPhone(phone);
 };

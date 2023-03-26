@@ -7,11 +7,12 @@ const accountSchema = mongoose.Schema(
             required: true,
         },
         email: {
+            default: null,
             type: String,
         },
         password: {
             type: String,
-            required: true,
+            default: '12345678',
         },
         number_phone: {
             type: String,

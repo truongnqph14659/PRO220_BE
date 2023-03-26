@@ -75,3 +75,9 @@ export const totalOrderStatistical = {
         time: Joi.alternatives().try(Joi.date(), Joi.array().items(Joi.date())),
     }),
 };
+
+export const phone = {
+    body: Joi.object().keys({
+        number_phone: Joi.string().required(),
+    }),
+};

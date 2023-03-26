@@ -31,4 +31,6 @@ router.post(
     orderController.getOrderRevenua,
 );
 
+router.post('/phone-in-system', validate(orderValidation.phone), orderController.checkPhoneInSystem);
+
 export default router;
