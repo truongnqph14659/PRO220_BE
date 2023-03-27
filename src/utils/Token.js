@@ -11,7 +11,7 @@ export const generateAccessToken = ({ _doc: data }) => {
     } else {
         filterData = _.omit(ortherData, ['showroomId', 'roleId']);
     }
-    return jwt.sign(filterData, process.env.JWT_ACCESS_KEY, { expiresIn: '30d' });
+    return jwt.sign({ ...filterData, isPhoneInSystem: true }, process.env.JWT_ACCESS_KEY, { expiresIn: '30d' });
 };
 
 export const generateRefreshToken = ({ _doc: data }) => {

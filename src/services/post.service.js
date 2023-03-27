@@ -3,7 +3,6 @@ import { PostModel } from '../models';
 const baseFilter = { deleted: false };
 
 export const getAll = async (filter = {}) => {
-    console.log('filter', filter);
     const page = filter.page;
     const limit = filter.limit;
     return PostModel.find({

@@ -138,7 +138,6 @@ export const GetExchangeQuantityWarehouse = async (idShowroom) => {
 };
 
 export const exchangeQuantityMaterial = async (dataObj) => {
-    console.log(dataObj);
     try {
         const update = await warehouseModel.updateOne(
             {
