@@ -262,7 +262,7 @@ export const getOrderRevenua = async (req, res) => {
 export const checkPhoneInSystem = async (req, res) => {
     try {
         const phone = await checkPhone(req.body.number_phone);
-        if (null) {
+        if (phone == null) {
             res.status(200).json({
                 isPhoneInSystem: false,
             });

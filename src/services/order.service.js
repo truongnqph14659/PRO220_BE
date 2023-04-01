@@ -59,7 +59,6 @@ export const removeByIds = async (ids = []) => {
 };
 
 export const updateById = async (_id, data) => {
-    console.log(data);
     return await OrderModel.findOneAndUpdate(
         {
             _id,
@@ -115,7 +114,11 @@ const handleMaterialsData = (data, id) => {
         appointmentSchedule: materials.appointmentSchedule,
         serviceType: materials.serviceType,
         reasons: _.isEmpty(materials.reasons) ? '' : materials.reasons[0],
+        materialIds: materials.materialIds,
+        materials: materials.materials,
+        showroomId: data.showroomId || materials.showroomId,
         listMaterials,
         totals,
+        _id: id,
     };
 };

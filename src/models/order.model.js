@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { ORDER_STATUS, SEVICE_TYPE } from '../constans/order';
+import { string } from 'joi';
 var mongoose_delete = require('mongoose-delete');
 
 const orderSchema = mongoose.Schema(
@@ -33,8 +34,7 @@ const orderSchema = mongoose.Schema(
             type: Date,
         },
         serviceType: {
-            default: SEVICE_TYPE.SHOWROOM,
-            type: Number,
+            type: String,
         },
         description: {
             type: String,
