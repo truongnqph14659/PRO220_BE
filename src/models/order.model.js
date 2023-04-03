@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { ORDER_STATUS, SEVICE_TYPE } from '../constans/order';
-import { string } from 'joi';
+import { number, string } from 'joi';
 var mongoose_delete = require('mongoose-delete');
 
 const orderSchema = mongoose.Schema(
@@ -29,6 +29,7 @@ const orderSchema = mongoose.Schema(
         },
         total: {
             type: Number,
+            default: 0,
         },
         appointmentSchedule: {
             type: Date,
@@ -38,10 +39,6 @@ const orderSchema = mongoose.Schema(
         },
         description: {
             type: String,
-        },
-        eventId: {
-            type: mongoose.ObjectId,
-            ref: 'eventId',
         },
         accountId: {
             type: mongoose.ObjectId,
@@ -68,8 +65,35 @@ const orderSchema = mongoose.Schema(
                 price: {
                     type: Number,
                 },
+                priceImport: {
+                    type: Number,
+                },
+                unit: {
+                    type: String,
+                    default: 'Cái',
+                },
+                name: {
+                    type: String,
+                },
             },
         ],
+        subServices: {
+            type: [
+                {
+                    _id: {
+                        type: String,
+                    },
+                    name: {
+                        type: String,
+                    },
+                    priceWorking: {
+                        type: Number,
+                        default: 0,
+                    },
+                },
+            ],
+            default: [],
+        },
         reasons: {
             type: Array,
             default: [],
@@ -80,11 +104,30 @@ const orderSchema = mongoose.Schema(
         },
         // loai xe may
         vehicleType: {
-            type: Number,
+            type: String,
         },
         //bien so xe
         licensePlates: {
             type: String,
+        },
+        soKhung: {
+            type: String,
+        },
+        vehicleNumber: {
+            type: String,
+        },
+        gas: {
+            type: String,
+        },
+        tg_nhan_xe: {
+            type: Date,
+        },
+        tg_tra_xe: {
+            type: Date,
+        },
+        VAT: {
+            type: Number,
+            default: 10,
         },
     },
     {

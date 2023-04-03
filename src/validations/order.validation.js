@@ -5,7 +5,7 @@ export const createOrder = {
     body: Joi.object().keys({
         description: Joi.string().allow('', null),
         appointmentSchedule: Joi.date().allow('', null),
-        serviceType: Joi.number().required().default(SEVICE_TYPE.SHOWROOM),
+        serviceType: Joi.string().required(),
         email: Joi.string().allow('', null),
         price: Joi.number().allow('', null),
         subPrice: Joi.number().allow('', null),
@@ -18,15 +18,34 @@ export const createOrder = {
         reasons: Joi.array().items(Joi.string()).empty(),
         materialIds: Joi.array().items(Joi.string()).empty(),
         materials: Joi.array().items().empty(),
+        subServices: Joi.array().items().empty(),
+        km: Joi.string().allow('', null),
+        vehicleType: Joi.string().allow('', null),
+        licensePlates: Joi.string().allow('', null),
+        soKhung: Joi.string().allow('', null),
+        vehicleNumber: Joi.string().allow('', null),
+        gas: Joi.string().allow('', null),
+        tg_nhan_xe: Joi.date().allow('', null),
+        tg_tra_xe: Joi.date().allow('', null),
     }),
 };
 
 export const updateOrderStatus = {
     body: Joi.object().keys({
-        status: Joi.number().required(),
+        status: Joi.number().allow('', null),
         reasons: Joi.array().items(Joi.string()).empty(),
         materialIds: Joi.array().items(Joi.string()).empty(),
         materials: Joi.array().items().empty(),
+        subServices: Joi.array().items().empty(),
+        km: Joi.string().allow('', null),
+        vehicleType: Joi.string().allow('', null),
+        licensePlates: Joi.string().allow('', null),
+        soKhung: Joi.string().allow('', null),
+        vehicleNumber: Joi.string().allow('', null),
+        gas: Joi.string().allow('', null),
+        tg_nhan_xe: Joi.date().allow('', null),
+        tg_tra_xe: Joi.date().allow('', null),
+
         total: Joi.number().allow('', null),
     }),
 };

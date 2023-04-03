@@ -15,7 +15,7 @@ export const getUserOrders = async (id) => {
     try {
         const data = await OrderModel.find({ accountId: id }).populate({
             path: 'showroomId',
-            select: ['_id', 'name', 'address', 'phone', 'images'],
+            select: ['_id', 'nameShowroom', 'address', 'phone', 'images'],
         });
         return data.map((order) => {
             return {
@@ -26,6 +26,8 @@ export const getUserOrders = async (id) => {
                 status: order.status,
                 appointmentSchedule: order.appointmentSchedule,
                 showroom: order.showroomId,
+                nameShowroom: order.nameShowroom,
+                address: order.address,
             };
         });
     } catch (error) {}
@@ -85,8 +87,17 @@ export const getById = async (id) => {
                     as: 'materialOrder',
                 },
             },
+            {
+                $lookup: {
+                    from: 'showrooms',
+                    localField: 'showroomId',
+                    foreignField: '_id',
+                    as: 'showroom',
+                },
+            },
         ]);
         const dataReaults = handleMaterialsData(data, id);
+        // console.log(dataReaults);
         return dataReaults;
     } catch (error) {}
 };
@@ -101,9 +112,13 @@ const handleMaterialsData = (data, id) => {
         };
     });
 
-    const totals = listMaterials.reduce((currentValue, material) => {
-        return material.price * material.qty + currentValue;
-    }, 0);
+    // const totalsMaterials = listMaterials.reduce((currentValue, material) => {
+    //     return material.price * material.qty + currentValue;
+    // }, 0);
+
+    // const totalsSubprice = listSubprice.reduce((currentValue, subprice) => {
+    //     return subprice.priceWorking + currentValue;
+    // }, 0);
 
     return {
         name: materials.name,
@@ -117,8 +132,19 @@ const handleMaterialsData = (data, id) => {
         materialIds: materials.materialIds,
         materials: materials.materials,
         showroomId: data.showroomId || materials.showroomId,
+        showroom: materials.showroom[0],
+        subServices: materials.subServices,
+        km: materials.km,
+        vehicleType: materials.vehicleType,
+        licensePlates: materials.licensePlates,
+        soKhung: materials.soKhung,
+        vehicleNumber: materials.vehicleNumber,
+        tg_nhan_xe: materials.tg_nhan_xe,
+        tg_tra_xe: materials.tg_tra_xe,
+        gas: materials.gas,
+        VAT: materials.VAT / 100,
+        total: materials.total,
         listMaterials,
-        totals,
         _id: id,
     };
 };
