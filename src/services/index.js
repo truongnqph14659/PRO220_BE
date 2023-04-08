@@ -9,3 +9,4 @@ module.exports.roleService = require('./role.service');
 module.exports.permissionService = require('./permission.service');
 module.exports.PostService = require('./post.service');
 module.exports.ServiceType = require('./serviceType.service');
+module.exports.subService = require('./subservice.service');
