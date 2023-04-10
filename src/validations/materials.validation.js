@@ -6,6 +6,7 @@ export const createMaterials = {
         priceInitial: Joi.number().required(),
         price: Joi.number().required(),
         image: Joi.string().required(),
+        unit: Joi.string().required(),
         quantity: Joi.number().allow('', null),
     }),
 };

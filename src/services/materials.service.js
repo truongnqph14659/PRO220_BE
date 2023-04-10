@@ -18,13 +18,15 @@ export const create = ({
     name,
     priceInitial,
     price,
-    image
+    image,
+    unit
 }) => {
     return new materialsModel({
         name,
         priceInitial,
         price,
-        image
+        image,
+        unit
     }).save();
 };
 

@@ -13,6 +13,9 @@ const materialsSchema = mongoose.Schema({
     image: {
         type: String,
     },
+    unit: {
+        type: String,
+    },
 }, {
     timestamps: true,
 }, );
