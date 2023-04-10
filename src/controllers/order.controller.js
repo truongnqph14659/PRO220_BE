@@ -153,7 +153,12 @@ export const removeByIds = async (req, res) => {
 
 export const updateById = async (req, res) => {
     try {
-        const data = await orderService.updateById(req.params.id, req.body);
+        let handleData = req.body;
+        if (handleData.status == 4) {
+            const madeVat = handleData.total + handleData.total * 0.1;
+            handleData = { ...handleData, totalWithVat: madeVat };
+        }
+        const data = await orderService.updateById(req.params.id, handleData);
         res.json(data);
     } catch (errors) {
         res.status(400).json({

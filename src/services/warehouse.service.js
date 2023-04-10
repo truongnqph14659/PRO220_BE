@@ -17,7 +17,7 @@ export const getFullWarehouseInformation = async (data) => {
         .populate({
             path: 'materials.materialId',
             match: { deleted: false },
-            select: ['name', 'price', 'quantity', 'image', 'deleted'],
+            select: ['name', 'price', 'quantity', 'image', 'unit', 'priceInitial', 'deleted'],
         })
         .exec();
 };

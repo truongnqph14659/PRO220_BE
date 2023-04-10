@@ -10,3 +10,5 @@ module.exports.roleController = require('./role.controller');
 module.exports.permissionController = require('./permission.controller');
 module.exports.PostController = require('./post.controller');
 module.exports.ServiceController = require('./service.controller');
+module.exports.DiscountController = require('./discount.controller');
+module.exports.SubServiceController = require('./subservice.controller');

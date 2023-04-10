@@ -3,8 +3,10 @@ import Joi from 'joi';
 export const createMaterials = {
     body: Joi.object().keys({
         name: Joi.string().required(),
+        priceInitial: Joi.number().required(),
         price: Joi.number().required(),
         image: Joi.string().required(),
+        unit: Joi.string().required(),
         quantity: Joi.number().allow('', null),
     }),
 };

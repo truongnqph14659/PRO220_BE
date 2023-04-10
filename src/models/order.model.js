@@ -31,6 +31,10 @@ const orderSchema = mongoose.Schema(
             type: Number,
             default: 0,
         },
+        totalWithVat: {
+            type: Number,
+            default: 0,
+        },
         appointmentSchedule: {
             type: Date,
         },
@@ -47,6 +51,12 @@ const orderSchema = mongoose.Schema(
         showroomId: {
             type: mongoose.ObjectId,
             ref: 'Showroom',
+        },
+        showroomName: {
+            type: String,
+        },
+        showroomAddress: {
+            type: String,
         },
         materialIds: {
             type: Array,
@@ -65,7 +75,7 @@ const orderSchema = mongoose.Schema(
                 price: {
                     type: Number,
                 },
-                priceImport: {
+                priceInitial: {
                     type: Number,
                 },
                 unit: {

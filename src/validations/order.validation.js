@@ -45,7 +45,6 @@ export const updateOrderStatus = {
         gas: Joi.string().allow('', null),
         tg_nhan_xe: Joi.date().allow('', null),
         tg_tra_xe: Joi.date().allow('', null),
-
         total: Joi.number().allow('', null),
     }),
 };

@@ -7,3 +7,4 @@ module.exports.warehouseValidation = require('./warehouse.validation');
 module.exports.DistrictValidation = require('./district.validation');
 module.exports.RoleValidation = require('./role.validation');
 module.exports.PermissionValidation = require('./permission.validation');
+module.exports.DiscountValidation = require('./discount.validation');

@@ -9,3 +9,5 @@ module.exports.permissionModel = require('./permissions.model');
 module.exports.roleModel = require('./roles.model');
 module.exports.PostModel = require('./post.model');
 module.exports.Service = require('./services.model');
+module.exports.Discount = require('./discount.model');
+module.exports.subService = require('./subService.model');

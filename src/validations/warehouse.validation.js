@@ -10,7 +10,8 @@ export const warehouseMaterial = {
                     qty: Joi.number(),
                     price: Joi.number().allow('', null),
                     name: Joi.string().allow('', null),
-                    priceInitial: Joi.string().allow('', null),
+                    unit: Joi.string().allow('', null),
+                    priceInitial: Joi.number().allow('', null),
                 }),
             )
             .required(),
@@ -24,7 +25,8 @@ export const warehouseMaterialTakePartOut = {
             materialId: Joi.string(),
             qty: Joi.number(),
             name: Joi.string().allow('', null),
-            priceInitial: Joi.string().allow('', null),
+            unit: Joi.string().allow('', null),
+            priceInitial: Joi.number().allow('', null),
         }).required(),
     }),
 };
@@ -36,6 +38,8 @@ export const warehouseMaterialUpdateOne = {
             materialId: Joi.string(),
             quantity: Joi.number(),
             name: Joi.string().allow('', null),
+            unit: Joi.string().allow('', null),
+            priceInitial: Joi.number().allow('', null),
         }).required(),
     }),
 };
