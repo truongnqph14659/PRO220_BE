@@ -12,10 +12,6 @@ const serviceSchema = mongoose.Schema({
                 typeName: {
                     type: String,
                 },
-                feeServiceType: {
-                    type: Number,
-                    default: 0,
-                },
             },
         ],
         default: [],

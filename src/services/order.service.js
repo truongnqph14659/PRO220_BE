@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import mongoose from 'mongoose';
-import { OrderModel } from '../models';
+import { OrderModel, showroomModel } from '../models';
 
 export const getAll = async (filter) => {
     return await OrderModel.find({
@@ -15,7 +15,7 @@ export const getUserOrders = async (id) => {
     try {
         const data = await OrderModel.find({ accountId: id }).populate({
             path: 'showroomId',
-            select: ['_id', 'name', 'address', 'phone', 'images'],
+            select: ['_id', 'nameShowroom', 'address', 'phone', 'images'],
         });
         return data.map((order) => {
             return {
@@ -26,13 +26,16 @@ export const getUserOrders = async (id) => {
                 status: order.status,
                 appointmentSchedule: order.appointmentSchedule,
                 showroom: order.showroomId,
+                nameShowroom: order.nameShowroom,
+                address: order.address,
             };
         });
     } catch (error) {}
 };
 
 export const create = async (data) => {
-    return await new OrderModel(data).save();
+    const showroom = await showroomModel.findOne({ _id: data.showroomId });
+    return await new OrderModel({ ...data, showroomName: showroom.name, showroomAddress: showroom.address }).save();
 };
 
 export const removeById = async (
@@ -75,11 +78,8 @@ export const getById = async (id) => {
     try {
         const data = await OrderModel.aggregate([
             {
-                $match: {},
-            },
-            {
                 $lookup: {
-                    from: 'materials',
+                    from: 'Material',
                     localField: 'materials.materialId',
                     foreignField: '_id',
                     as: 'materialOrder',
@@ -101,13 +101,8 @@ const handleMaterialsData = (data, id) => {
         };
     });
 
-    const totals = listMaterials.reduce((currentValue, material) => {
-        return material.price * material.qty + currentValue;
-    }, 0);
-
     return {
         name: materials.name,
-        address: materials.address,
         email: materials.email,
         number_phone: materials.number_phone,
         status: materials.status,
@@ -117,8 +112,20 @@ const handleMaterialsData = (data, id) => {
         materialIds: materials.materialIds,
         materials: materials.materials,
         showroomId: data.showroomId || materials.showroomId,
+        showroomName: materials.showroomName,
+        showroomAddress: materials.showroomAddress,
+        subServices: materials.subServices,
+        km: materials.km,
+        vehicleType: materials.vehicleType,
+        licensePlates: materials.licensePlates,
+        soKhung: materials.soKhung,
+        vehicleNumber: materials.vehicleNumber,
+        tg_nhan_xe: materials.tg_nhan_xe,
+        tg_tra_xe: materials.tg_tra_xe,
+        gas: materials.gas,
+        VAT: materials.VAT / 100,
+        total: materials.total,
         listMaterials,
-        totals,
         _id: id,
     };
 };

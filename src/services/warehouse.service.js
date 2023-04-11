@@ -17,7 +17,7 @@ export const getFullWarehouseInformation = async (data) => {
         .populate({
             path: 'materials.materialId',
             match: { deleted: false },
-            select: ['name', 'price', 'quantity', 'image', 'deleted'],
+            select: ['name', 'price', 'quantity', 'image', 'unit', 'priceInitial', 'deleted'],
         })
         .exec();
 };
@@ -70,15 +70,15 @@ const updateQuantityMaterial = async (dataObj) => {
 
 export const updateQuantityMaterialBack = async (dataObj) => {
     try {
-        const dataWarehouse = await warehouseModel.findOne({ showroomId: dataObj.idShowroom });
+        const dataWarehouse = await warehouseModel.findOne({ showroomId: dataObj.showroomId });
         const material = dataWarehouse.materials.find((part) => part.materialId == dataObj.material.materialId);
         const dataUpdate = await warehouseModel.updateOne(
             {
-                showroomId: mongoose.Types.ObjectId(dataObj.idShowroom),
+                showroomId: mongoose.Types.ObjectId(dataObj.showroomId),
                 'materials.materialId': mongoose.Types.ObjectId(dataObj.material.materialId),
             },
             {
-                $set: { 'materials.$.quantity': dataObj.material.quantity + material.quantity },
+                $set: { 'materials.$.quantity': dataObj.material.qty + material.quantity },
             },
         );
         return dataUpdate;
