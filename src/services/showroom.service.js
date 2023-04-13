@@ -35,7 +35,11 @@ export const removeById = async (_id) => {
 };
 
 export const updateById = (_id, data) => {
-    return showroomModel.findOneAndUpdate({ _id, deleted: false }, data, { new: true });
+    return showroomModel.findOneAndUpdate({ _id }, data, { new: true });
+};
+
+export const updateStatusById = (_id, data) => {
+    return showroomModel.findOneAndUpdate({ _id }, data, { new: true });
 };
 
 export const showroomNearBy = (data) => {
