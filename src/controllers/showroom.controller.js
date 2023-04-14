@@ -87,7 +87,6 @@ export const showroomNearBy = async (req, res) => {
     try {
         const data = await showroomService.showroomNearBy(req.body);
         const listShowroom = data.filter((showroom) => showroom.enabled == true);
-        console.log(listShowroom);
         if (listShowroom.length > 0) {
             res.json(listShowroom);
         } else {

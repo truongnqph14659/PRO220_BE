@@ -34,7 +34,6 @@ export const getAll = async (req, res) => {
         const data = await orderService.getAll(filter);
         res.json(data);
     } catch (errors) {
-        console.log('errors-getAll-Order', errors);
         res.status(400).json({
             errors,
             message: 'Đã có lỗi xảy ra không tìm thấy dữ liệu!',
@@ -88,29 +87,6 @@ const checkExistOrder = async (number_phone, licensePlates) => {
         return error;
     }
 };
-
-// export const createOrderByCustomer = async (req, res) => {
-//     try {
-//         console.log(req.body);
-//         // const { number_phone, licensePlates } = req.body;
-//         // //check order da ton tai va dang trong qua trinh xu ly
-//         // const orders = await checkExistOrder(number_phone, licensePlates);
-//         // if (orders.length === 0) {
-//         //     const data = await orderService.create(req.body);
-//         //     res.status(200).json(data);
-//         //     return;
-//         // }
-//         res.status(200).json({
-//             message:
-//                 'Đơn hàng của bạn đang trong quá trình thực hiện. Vui lòng liên hệ quản lý cửa hàng hoặc xem đơn hàng (nếu có)!',
-//         });
-//     } catch (errors) {
-//         res.status(400).json({
-//             errors,
-//             message: 'Đã có lỗi xảy ra không thể thêm dữ liệu!',
-//         });
-//     }
-// };
 
 export const removeById = async (req, res) => {
     try {
@@ -235,7 +211,6 @@ export const getOrderRevenua = async (req, res) => {
         ]);
         res.status(200).json(data);
     } catch (errors) {
-        console.log('errors-getOrderRevenua', errors);
         res.status(400).json({
             errors,
             message: 'Đã có lỗi xảy ra cập nhật thất bại!',

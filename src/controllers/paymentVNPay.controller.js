@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
 export const Payment = async (req, res) => {
-    const { amount, bankCode, orderInfo, orderType, locale = 'vn',idOrder } = req.body;
+    const { amount, bankCode, orderInfo, orderType, locale = 'vn', idOrder } = req.body;
     const ipAddr =
         req.headers['x-forwarded-for'] ||
         req.connection.remoteAddress ||
@@ -86,23 +86,25 @@ export const vnpay_Ipn = (req, res, next) => {
 };
 
 export const SendMail = async (req, res) => {
-    const {serviceType,materials,total,_id,email} =req.body
-    const Bill = materials.map((item,index)=>{
-        return `
+    const { serviceType, materials, total, _id, email } = req.body;
+    const Bill = materials
+        .map((item, index) => {
+            return `
             <tr>
                 <td><span style="padding: 10px;display: block;">${index}</span></td>
                 <td><span style="padding: 10px;display: block;">Nhông sên dĩa DID Dream AD3 </span></td>
                 <td><span style="padding: 10px;display: block;"> ${item.qty} </span></td>
                 <td><span style="padding: 10px;display: block;"> ${item.price} </span></td>
-                <td><span style="padding: 10px;display: block;"> ${(item.price*item.qty)} </span></td>
+                <td><span style="padding: 10px;display: block;"> ${item.price * item.qty} </span></td>
             </tr>
-        `
-    }).join("")
+        `;
+        })
+        .join('');
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
-        auth: { 
+        auth: {
             user: 'huyndph14652@fpt.edu.vn',
             pass: 'upphlixzjrebbmxz',
         },
@@ -133,7 +135,7 @@ export const SendMail = async (req, res) => {
                             - Dịch vụ sửa xe Dodoris rất vui thông báo đơn hàng #${_id} của quý khách đã được giao thành
                             công ngày 02/02/2023.
                         </p>
-                        <p>- Dịch vụ : ${serviceType==0?'Bảo dưỡng tại nhà':'Bảo dưỡng tại cửa hàng'}</p>
+                        <p>- Dịch vụ : ${serviceType == 0 ? 'Bảo dưỡng tại nhà' : 'Bảo dưỡng tại cửa hàng'}</p>
                         <p>- Thông tin chi tiết đơn hàng :</p>
                     </div>
                     <table border="1">
@@ -162,7 +164,7 @@ export const SendMail = async (req, res) => {
     };
     return transporter.sendMail(option, (err, info) => {
         if (err) {
-            return console.log(err);
+            return;
         }
 
         res.json({ status: info.response });

@@ -51,7 +51,7 @@ export const showroomNearBy = (data) => {
                     coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
                 },
                 key: 'location',
-                maxDistance: 3000,
+                maxDistance: 1000,
                 distanceField: 'calculated',
                 spherical: true,
             },
@@ -74,16 +74,6 @@ export const compareShowroomNearBy = (data) => {
         },
     ]);
 };
-
-// export const search = async (text) => {
-//     //i : khong phan biet chu hoa, chu thuong
-//     return showroomModel.find({
-//         $or: [
-//             { name: new RegExp(text, 'i'), deleted: false },
-//             { address: new RegExp(text, 'i'), deleted: false },
-//         ],
-//     });
-// };
 
 const filterShowroomAddress = (showrooms, address) => {
     return showrooms.filter((showroom) => showroom.address.toLowerCase().includes(address.toLowerCase()));

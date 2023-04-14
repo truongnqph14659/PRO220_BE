@@ -17,7 +17,7 @@ export const getUserOrders = async (id) => {
             path: 'showroomId',
             select: ['_id', 'nameShowroom', 'address', 'phone', 'images'],
         });
-        console.log(data);
+
         return data.map((order) => {
             return {
                 idOrder: order._id,
@@ -126,6 +126,7 @@ const handleMaterialsData = (data, id) => {
         gas: materials.gas,
         VAT: materials.VAT / 100,
         total: materials.total,
+        totalWithVat: materials.totalWithVat,
         listMaterials,
         _id: id,
     };

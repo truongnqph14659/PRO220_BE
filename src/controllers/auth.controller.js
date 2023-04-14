@@ -55,7 +55,6 @@ export const login = async (req, res) => {
 };
 export const requestRefreshToken = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-    console.log(refreshToken);
     if (!refreshToken) return res.status(401).json('you`re not authenticate');
     jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (error, user) => {
         if (error) {
