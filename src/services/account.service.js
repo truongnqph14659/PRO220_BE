@@ -35,3 +35,7 @@ export const search = async (filter = null) => {
 export const getUserRole = async (filter = null) => {
     return await accountServiceModel.findOne({ ...filter, ...baseFilter }).populate('roleId');
 };
+
+export const getAllUser = async (filter = null) => {
+    return await accountServiceModel.find({roleId:null});
+};

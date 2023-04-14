@@ -9,12 +9,23 @@ export const getAll = async (req, res) => {
             roleId: { $exists: true },
         };
         const data = await accountServices.getAll({ ...existsRoleId, ...req.body });
-        const resual = data.filter((item)=>item.roleId)
+        const resual = data.filter((item) => item.roleId);
         console.log(resual);
         res.json(resual);
     } catch (error) {
         res.status(400).json({
             message: error,
+        });
+    }
+};
+
+export const getUser = async (req, res) => {
+    try {
+        const data = await accountServices.getAllUser();
+        res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            message: 'không tìm thấy dữ liệu',
         });
     }
 };

@@ -15,5 +15,6 @@ router.post('/login', validate(accountValidation.login), AuthController.login);
 router.post('/register', validate(accountValidation.register), AuthController.register);
 router.post('/refrehToken', AuthController.requestRefreshToken);
 router.post('/chagePassword/:id', accountController.changePassword);
+router.get('/getUsers',accountController.getUser)
 
 export default router;
