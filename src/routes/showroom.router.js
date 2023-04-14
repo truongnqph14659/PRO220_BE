@@ -19,8 +19,8 @@ router
     .get(validate(showroomValidation.getById), showroomController.getById)
     .delete(validate(showroomValidation.getById), showroomController.removeById)
     .patch(
-        validate(showroomValidation.getById),
-        validate(showroomValidation.updateById),
+        // validate(showroomValidation.getById),
+        // validate(showroomValidation.updateById),
         showroomController.updateById,
     );
 

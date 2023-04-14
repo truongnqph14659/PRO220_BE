@@ -17,6 +17,7 @@ export const getUserOrders = async (id) => {
             path: 'showroomId',
             select: ['_id', 'nameShowroom', 'address', 'phone', 'images'],
         });
+        console.log(data);
         return data.map((order) => {
             return {
                 idOrder: order._id,
@@ -26,7 +27,7 @@ export const getUserOrders = async (id) => {
                 status: order.status,
                 appointmentSchedule: order.appointmentSchedule,
                 showroom: order.showroomId,
-                nameShowroom: order.nameShowroom,
+                nameShowroom: order.showroomName,
                 address: order.address,
             };
         });

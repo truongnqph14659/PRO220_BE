@@ -35,7 +35,11 @@ export const removeById = async (_id) => {
 };
 
 export const updateById = (_id, data) => {
-    return showroomModel.findOneAndUpdate({ _id, deleted: false }, data, { new: true });
+    return showroomModel.findOneAndUpdate({ _id }, data, { new: true });
+};
+
+export const updateStatusById = (_id, data) => {
+    return showroomModel.findOneAndUpdate({ _id }, data, { new: true });
 };
 
 export const showroomNearBy = (data) => {
@@ -47,7 +51,7 @@ export const showroomNearBy = (data) => {
                     coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
                 },
                 key: 'location',
-                maxDistance: 1000,
+                maxDistance: 3000,
                 distanceField: 'calculated',
                 spherical: true,
             },
