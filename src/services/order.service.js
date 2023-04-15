@@ -126,6 +126,7 @@ const handleMaterialsData = (data, id) => {
         gas: materials.gas,
         VAT: materials.VAT / 100,
         total: materials.total,
+        totalWithVat: materials.totalWithVat,
         listMaterials,
         _id: id,
     };
