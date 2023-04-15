@@ -58,7 +58,6 @@ export const getById = async (req, res) => {
 
 export const getByTitle = async (req, res) => {
     try {
-        console.log('req.params.title', req.body.title);
         const data = await PostService.getByTitle(req.body.title);
         res.json(data);
     } catch (error) {

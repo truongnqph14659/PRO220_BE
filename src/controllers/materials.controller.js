@@ -41,7 +41,6 @@ export const create = async (req, res) => {
 export const updateById = async (req, res) => {
     try {
         const data = await materialsService.updateById(req.params.id, req.body);
-        console.log(data);
         res.json(data);
     } catch (error) {
         res.status(400).json({

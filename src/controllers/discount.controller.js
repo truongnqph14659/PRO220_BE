@@ -17,7 +17,6 @@ export const CreateDiscount = async (req, res) => {
             code: `${Math.floor(Math.random() * (999 - 100 + 1) + 100)}`,
             ...req.body,
         };
-        console.log(value);
         const data = await Discount.Create(value);
         res.json(data);
     } catch (error) {

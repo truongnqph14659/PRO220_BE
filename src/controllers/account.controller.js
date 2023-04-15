@@ -10,7 +10,6 @@ export const getAll = async (req, res) => {
         };
         const data = await accountServices.getAll({ ...existsRoleId, ...req.body });
         const resual = data.filter((item) => item.roleId);
-        console.log(resual);
         res.json(resual);
     } catch (error) {
         res.status(400).json({
