@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { warehouseService } from '../services';
+import { checkQuantityEnough } from '../services/generalWarehouse.service';
 
 export const getWarehouseRelationalReferenced = async (req, res) => {
     try {
@@ -24,10 +25,15 @@ export const updateQuantityManyPartInWarehouse = (req, res) => {
     }
 };
 
-export const updateQuantityOnePartInWarehouse = (req, res) => {
+export const updateQuantityOnePartInWarehouse = async (req, res) => {
     try {
-        const data = warehouseService.updateWarehouseManyQuantity(req.body);
-        res.json(data);
+        const generaWarehouselData = await checkQuantityEnough(req.body);
+        if (req.body.material.quantity <= generaWarehouselData.quantity) {
+            const data = warehouseService.updateWarehouseManyQuantity(req.body);
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
+        }
     } catch (error) {
         res.status(400).json({
             error: 'Đã có lỗi xảy ra không thể cập nhật dữ liệu!',
