@@ -244,3 +244,15 @@ export const checkPhoneInSystem = async (req, res) => {
 const checkPhone = async (phone) => {
     return await accountServices.getPhone(phone);
 };
+
+export const getShowroom = async (req,res)=> {
+    try {
+        console.log(req.body.id);
+        const data = await orderService.getOderShowroom(req.params.id)
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({
+            message: 'Đã có lỗi xảy ra!',
+        });
+    }
+}
