@@ -2,6 +2,7 @@ import { materialsService } from '../services';
 import _ from 'lodash';
 import { insertManyMaterialWarehouse } from '../services/warehouse.service';
 import { findMaterials } from '../services/materials.service';
+import { createPartInGeneralWarehouse } from '../services/generalWarehouse.service';
 
 export const getAll = async (req, res) => {
     try {
@@ -29,6 +30,7 @@ export const create = async (req, res) => {
     try {
         const data = await materialsService.create(req.body);
         const quantity = req.body.quantity == null ? 0 : req.body.quantity;
+        await createPartInGeneralWarehouse({ materialId: data._id, quantity });
         await insertManyMaterialWarehouse({ materialId: data._id, quantity });
         res.json(data);
     } catch (error) {
