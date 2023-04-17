@@ -167,3 +167,26 @@ const makeCaculateQuantity = (dataSoures) => {
     const result = dataSoures.max - dataSoures.quantityCurrentChange;
     return dataSoures.quantityCurrent + result;
 };
+
+export const findOnePartInWarehouse = async (dataPart) => {
+    return warehouseModel.aggregate([
+        {
+            $match: {
+                showroomId: mongoose.Types.ObjectId(dataPart.idShowroom),
+            },
+        },
+        {
+            $unwind: '$materials',
+        },
+        {
+            $match: {
+                'materials.materialId': mongoose.Types.ObjectId(dataPart.material.materialId),
+            },
+        },
+        {
+            $project: {
+                quantity: '$materials.quantity',
+            },
+        },
+    ]);
+};
