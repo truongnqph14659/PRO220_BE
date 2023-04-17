@@ -33,4 +33,6 @@ router.post(
 
 router.post('/phone-in-system', validate(orderValidation.phone), orderController.checkPhoneInSystem);
 
+router.get('/getOderShowroom/:id',orderController.getShowroom)
+
 export default router;

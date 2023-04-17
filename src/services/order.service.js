@@ -75,6 +75,10 @@ export const updateById = async (_id, data) => {
     );
 };
 
+export const getOderShowroom =async (data)=>{
+    return await OrderModel.find({showroomId:data});
+}
+
 export const getById = async (id) => {
     try {
         const data = await OrderModel.aggregate([
@@ -131,3 +135,5 @@ const handleMaterialsData = (data, id) => {
         _id: id,
     };
 };
+
+
