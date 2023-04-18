@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { warehouseService } from '../services';
-import { checkQuantityEnough } from '../services/generalWarehouse.service';
+import { checkQuantityEnough, updateGeneralPart } from '../services/generalWarehouse.service';
+import { findOnePartInWarehouse } from '../services/warehouse.service';
 
 export const getWarehouseRelationalReferenced = async (req, res) => {
     try {
@@ -28,7 +29,13 @@ export const updateQuantityManyPartInWarehouse = (req, res) => {
 export const updateQuantityOnePartInWarehouse = async (req, res) => {
     try {
         const generaWarehouselData = await checkQuantityEnough(req.body);
-        if (req.body.material.quantity <= generaWarehouselData.quantity) {
+        const quantityWarehouse = await findOnePartInWarehouse(req.body);
+        const quantityCaculator = req.body.material.quantity - quantityWarehouse[0].quantity;
+        if (quantityCaculator <= generaWarehouselData.quantity) {
+            await updateGeneralPart({
+                idMaterial: req.body.material.materialId,
+                quantity: generaWarehouselData.quantity - quantityCaculator,
+            });
             const data = warehouseService.updateWarehouseManyQuantity(req.body);
             res.json({ success: true });
         } else {
