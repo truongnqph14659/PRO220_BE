@@ -12,3 +12,4 @@ module.exports.ServiceType = require('./serviceType.service');
 module.exports.Discount = require('./discount.service');
 module.exports.subService = require('./subservice.service');
 module.exports.generalWarehouse = require('./generalWarehouse.service');
+module.exports.notifiPartService = require('./notificationPart.service');

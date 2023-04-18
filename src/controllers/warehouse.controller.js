@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { warehouseService } from '../services';
-import { checkQuantityEnough } from '../services/generalWarehouse.service';
+import { checkQuantityEnough, updateGeneralPart } from '../services/generalWarehouse.service';
+import { findOnePartInWarehouse } from '../services/warehouse.service';
 
 export const getWarehouseRelationalReferenced = async (req, res) => {
     try {
@@ -28,7 +29,13 @@ export const updateQuantityManyPartInWarehouse = (req, res) => {
 export const updateQuantityOnePartInWarehouse = async (req, res) => {
     try {
         const generaWarehouselData = await checkQuantityEnough(req.body);
-        if (req.body.material.quantity <= generaWarehouselData.quantity) {
+        const quantityWarehouse = await findOnePartInWarehouse(req.body);
+        const quantityCaculator = req.body.material.quantity - quantityWarehouse[0].quantity;
+        if (quantityCaculator <= generaWarehouselData.quantity) {
+            await updateGeneralPart({
+                idMaterial: req.body.material.materialId,
+                quantity: generaWarehouselData.quantity - quantityCaculator,
+            });
             const data = warehouseService.updateWarehouseManyQuantity(req.body);
             res.json({ success: true });
         } else {
@@ -98,6 +105,37 @@ export const exchangePartQuantity = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             error: 'Đã có lỗi xảy ra không thể cập nhật dữ liệu!',
+        });
+    }
+};
+
+export const changeRequiredPart = async (req, res) => {
+    try {
+        const data = await warehouseService.changeRequired(req.body);
+        res.status(200).json({
+            data,
+        });
+    } catch (error) {
+        res.status(400).json({
+            error: 'Đã có lỗi xảy ra không thể gửi yêu cầu!',
+        });
+    }
+};
+
+export const getOneRequiredPart = async (req, res) => {
+    try {
+        const data = await warehouseService.getOnePart(req.query);
+        const handleData = {
+            showroomId: data[0].showroomId,
+            unit: data[0].dataMaterial.unit,
+            key: data[0].dataMaterial._id,
+            name: data[0].dataMaterial.name,
+            quantity: data[0].materials.quantity,
+        };
+        res.status(200).json([handleData]);
+    } catch (error) {
+        res.status(400).json({
+            error: 'Đã có lỗi xảy ra không thể nhận yêu cầu, Thử lại sau!',
         });
     }
 };
