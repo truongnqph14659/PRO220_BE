@@ -139,6 +139,10 @@ const orderSchema = mongoose.Schema(
             type: Number,
             default: 10,
         },
+        seen: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,

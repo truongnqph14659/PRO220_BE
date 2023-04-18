@@ -245,14 +245,36 @@ const checkPhone = async (phone) => {
     return await accountServices.getPhone(phone);
 };
 
-export const getShowroom = async (req,res)=> {
+export const getShowroom = async (req, res) => {
     try {
         console.log(req.body.id);
-        const data = await orderService.getOderShowroom(req.params.id)
+        const data = await orderService.getOderShowroom(req.params.id);
         res.status(200).json(data);
     } catch (error) {
         res.status(400).json({
             message: 'Đã có lỗi xảy ra!',
         });
     }
-}
+};
+
+export const getAllNotificationOrder = async (req, res) => {
+    try {
+        const data = await orderService.notifiCationInOrder(req.body.showroomId);
+        res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi',
+        });
+    }
+};
+
+export const updateSeenNotification = async (req, res) => {
+    try {
+        const data = await orderService.updateSeenOrder(req.params.id);
+        res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi',
+        });
+    }
+};
