@@ -60,7 +60,7 @@ const updateQuantityMaterial = async (dataObj) => {
                 'materials.materialId': mongoose.Types.ObjectId(dataObj.material.materialId),
             },
             {
-                $set: { 'materials.$.quantity': dataObj.material.quantity },
+                $set: { 'materials.$.quantity': dataObj.material.quantity, 'materials.$.isRequired': false },
             },
         );
     } catch (error) {
@@ -145,7 +145,7 @@ export const exchangeQuantityMaterial = async (dataObj) => {
                 'materials.materialId': mongoose.Types.ObjectId(dataObj.idPart),
             },
             {
-                $set: { 'materials.$.quantity': dataObj.quantityCurrentChange },
+                $set: { 'materials.$.quantity': dataObj.quantityCurrentChange, 'materials.$.isRequired': false },
             },
         );
         const dataUpdate = await warehouseModel.updateOne(
@@ -187,6 +187,47 @@ export const findOnePartInWarehouse = async (dataPart) => {
             $project: {
                 quantity: '$materials.quantity',
             },
+        },
+    ]);
+};
+
+export const changeRequired = async (dataObj) => {
+    return await warehouseModel.updateOne(
+        {
+            showroomId: mongoose.Types.ObjectId(dataObj.showroomId),
+            'materials.materialId': mongoose.Types.ObjectId(dataObj.idPart),
+        },
+        {
+            $set: { 'materials.$.isRequired': true },
+        },
+    );
+};
+
+export const getOnePart = async (dataObj) => {
+    return await warehouseModel.aggregate([
+        {
+            $match: {
+                showroomId: mongoose.Types.ObjectId(dataObj.showroomId),
+            },
+        },
+        {
+            $unwind: '$materials',
+        },
+        {
+            $match: {
+                'materials.materialId': mongoose.Types.ObjectId(dataObj.materialId),
+            },
+        },
+        {
+            $lookup: {
+                from: 'materials',
+                localField: 'materials.materialId',
+                foreignField: '_id',
+                as: 'dataMaterial',
+            },
+        },
+        {
+            $unwind: '$dataMaterial',
         },
     ]);
 };

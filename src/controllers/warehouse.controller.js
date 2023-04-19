@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { warehouseService } from '../services';
 import { checkQuantityEnough, updateGeneralPart } from '../services/generalWarehouse.service';
 import { findOnePartInWarehouse } from '../services/warehouse.service';
+import { deleteNotification } from '../services/notificationPart.service';
 
 export const getWarehouseRelationalReferenced = async (req, res) => {
     try {
@@ -32,6 +33,7 @@ export const updateQuantityOnePartInWarehouse = async (req, res) => {
         const quantityWarehouse = await findOnePartInWarehouse(req.body);
         const quantityCaculator = req.body.material.quantity - quantityWarehouse[0].quantity;
         if (quantityCaculator <= generaWarehouselData.quantity) {
+            await deleteNotification({ materialId: req.body.material.materialId, showroomId: req.body.idShowroom });
             await updateGeneralPart({
                 idMaterial: req.body.material.materialId,
                 quantity: generaWarehouselData.quantity - quantityCaculator,
@@ -98,6 +100,7 @@ export const getDataExchangePart = async (req, res) => {
 
 export const exchangePartQuantity = async (req, res) => {
     try {
+        await deleteNotification({ materialId: req.body.idPart, showroomId: req.body.idCurrentShowroom });
         const data = await warehouseService.exchangeQuantityMaterial(req.body);
         res.status(200).json({
             data,
@@ -105,6 +108,37 @@ export const exchangePartQuantity = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             error: 'Đã có lỗi xảy ra không thể cập nhật dữ liệu!',
+        });
+    }
+};
+
+export const changeRequiredPart = async (req, res) => {
+    try {
+        const data = await warehouseService.changeRequired(req.body);
+        res.status(200).json({
+            data,
+        });
+    } catch (error) {
+        res.status(400).json({
+            error: 'Đã có lỗi xảy ra không thể gửi yêu cầu!',
+        });
+    }
+};
+
+export const getOneRequiredPart = async (req, res) => {
+    try {
+        const data = await warehouseService.getOnePart(req.query);
+        const handleData = {
+            showroomId: data[0].showroomId,
+            unit: data[0].dataMaterial.unit,
+            key: data[0].dataMaterial._id,
+            name: data[0].dataMaterial.name,
+            quantity: data[0].materials.quantity,
+        };
+        res.status(200).json([handleData]);
+    } catch (error) {
+        res.status(400).json({
+            error: 'Đã có lỗi xảy ra không thể nhận yêu cầu, Thử lại sau!',
         });
     }
 };

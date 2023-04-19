@@ -13,3 +13,4 @@ module.exports.ServiceController = require('./service.controller');
 module.exports.DiscountController = require('./discount.controller');
 module.exports.SubServiceController = require('./subservice.controller');
 module.exports.generalWarehouse = require('./generalWarehouse.controller');
+module.exports.notificationPart = require('./notificationPart.controller');

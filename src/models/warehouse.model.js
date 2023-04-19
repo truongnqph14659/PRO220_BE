@@ -17,6 +17,10 @@ const warehouseSchema = mongoose.Schema(
                     type: Number,
                     default: 0,
                 },
+                isRequired: {
+                    type: Boolean,
+                    default: false,
+                },
             },
         ],
     },

@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 const notiPartSchema = mongoose.Schema(
     {
-        namePart: {
+        nameMaterial: {
             type: String,
         },
         nameShowroom: {
             type: String,
         },
-        idMaterial: {
+        materialId: {
             type: String,
         },
-        idShowroom: {
+        showroomId: {
             type: String,
         },
         imageShowroom: {
