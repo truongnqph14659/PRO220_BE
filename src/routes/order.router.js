@@ -33,6 +33,10 @@ router.post(
 
 router.post('/phone-in-system', validate(orderValidation.phone), orderController.checkPhoneInSystem);
 
-router.get('/getOderShowroom/:id',orderController.getShowroom)
+router.get('/getOderShowroom/:id', orderController.getShowroom);
+
+router.patch('/order/notification/:id', orderController.updateSeenNotification);
+
+router.post('/order/notification', orderController.getAllNotificationOrder);
 
 export default router;

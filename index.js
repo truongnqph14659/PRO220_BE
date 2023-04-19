@@ -21,6 +21,7 @@ import routerService from './src/routes/service.router';
 import routeDiscount from './src/routes/discount.router';
 import routersubService from './src/routes/subservice.router';
 import routerGeneralWarehouse from './src/routes/generalWarehouse';
+import routerNotification from './src/routes/notification.router';
 
 const app = express();
 // const app = express();
@@ -51,6 +52,7 @@ app.use('/api', routeDiscount);
 app.use('/api', routersubService);
 app.use('/api', routersubService);
 app.use('/api', routerGeneralWarehouse);
+app.use('/api', routerNotification);
 
 // parse urlencoded request body
 app.use(
