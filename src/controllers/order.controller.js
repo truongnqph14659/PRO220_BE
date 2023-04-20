@@ -25,16 +25,7 @@ const formatRequestFilterGetOrders = (body) => {
 
 export const getAll = async (req, res) => {
     try {
-        const showroomId = req.query.showroomId;
         const filter = formatRequestFilterGetOrders(req.body);
-        if (showroomId) {
-            const data = await orderService.getAll({
-                showroomId,
-                ...filter,
-            });
-            res.json(data);
-            return;
-        }
         const data = await orderService.getAll(filter);
         res.json(data);
     } catch (errors) {
