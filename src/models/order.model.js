@@ -143,6 +143,10 @@ const orderSchema = mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        isCustomer: {
+            type: Boolean,
+            default: true,
+        },
     },
     {
         timestamps: true,
