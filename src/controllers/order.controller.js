@@ -21,16 +21,7 @@ const formatRequestFilterGetOrders = (body) => {
 
 export const getAll = async (req, res) => {
     try {
-        const showroomId = req.query.showroomId;
         const filter = formatRequestFilterGetOrders(req.body);
-        if (showroomId) {
-            const data = await orderService.getAll({
-                showroomId,
-                ...filter,
-            });
-            res.json(data);
-            return;
-        }
         const data = await orderService.getAll(filter);
         res.json(data);
     } catch (errors) {
@@ -245,14 +236,14 @@ const checkPhone = async (phone) => {
     return await accountServices.getPhone(phone);
 };
 
-export const getShowroom = async (req,res)=> {
+export const getShowroom = async (req, res) => {
     try {
         console.log(req.body.id);
-        const data = await orderService.getOderShowroom(req.params.id)
+        const data = await orderService.getOderShowroom(req.params.id);
         res.status(200).json(data);
     } catch (error) {
         res.status(400).json({
             message: 'Đã có lỗi xảy ra!',
         });
     }
-}
+};
