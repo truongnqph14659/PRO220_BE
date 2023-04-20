@@ -68,7 +68,7 @@ export const updateById = async (_id, data) => {
             _id,
             deleted: false,
         },
-        data,
+        { ...data, seen: true },
         {
             new: true,
         },
@@ -133,6 +133,7 @@ const handleMaterialsData = (data, id) => {
         totalWithVat: materials.totalWithVat,
         listMaterials,
         seen: materials.seen,
+        isCustomer: materials.isCustomer,
         _id: id,
     };
 };

@@ -27,6 +27,7 @@ export const createOrder = {
         gas: Joi.string().allow('', null),
         tg_nhan_xe: Joi.date().allow('', null),
         tg_tra_xe: Joi.date().allow('', null),
+        isCustomer: Joi.boolean().empty(),
     }),
 };
 
@@ -46,6 +47,11 @@ export const updateOrderStatus = {
         tg_nhan_xe: Joi.date().allow('', null),
         tg_tra_xe: Joi.date().allow('', null),
         total: Joi.number().allow('', null),
+        number_phone: Joi.string().allow('', null),
+        showroomName: Joi.string().allow('', null),
+        appointmentSchedule: Joi.date().allow('', null),
+        isCustomer: Joi.boolean().empty(),
+        serviceType: Joi.string().allow('', null),
     }),
 };
 
@@ -67,7 +73,7 @@ export const createOrderByCustomer = {
     body: Joi.object().keys({
         description: Joi.string().allow('', null),
         appointmentSchedule: Joi.date().allow('', null),
-        serviceType: Joi.number().required().default(SEVICE_TYPE.SHOWROOM),
+        serviceType: Joi.number().required(),
         accountId: Joi.string().allow('', null),
         email: Joi.string().allow('', null),
         name: Joi.string().required(),
