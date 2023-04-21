@@ -86,12 +86,12 @@ export const searchValueInShowroom = async (dataSearch) => {
     if (isDistrict && isAddress) {
         const listShowroom = await showroomModel
             .find({ districtId: dataSearch.district })
-            .select({ _id: 1, name: 1, phone: 1, address: 1, images: 1, deleted: 1 });
+            .select({ _id: 1, name: 1, phone: 1, address: 1, images: 1, deleted: 1, enabled: 1 });
         return filterShowroomAddress(listShowroom, dataSearch.address);
     } else if (isDistrict) {
         const listShowroom = await showroomModel
             .find({ districtId: dataSearch.district })
-            .select({ _id: 1, name: 1, phone: 1, address: 1, images: 1, deleted: 1 });
+            .select({ _id: 1, name: 1, phone: 1, address: 1, images: 1, deleted: 1, enabled: 1 });
         return listShowroom;
     } else if (isAddress) {
         const listShowroom = await showroomModel.aggregate([
@@ -103,6 +103,7 @@ export const searchValueInShowroom = async (dataSearch) => {
                     address: 1,
                     images: 1,
                     deleted: 1,
+                    enabled: 1,
                 },
             },
         ]);
@@ -117,6 +118,7 @@ export const searchValueInShowroom = async (dataSearch) => {
                     address: 1,
                     images: 1,
                     deleted: 1,
+                    enabled: 1,
                 },
             },
         ]);
