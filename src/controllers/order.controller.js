@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 import { OrderModel } from '../models';
 import { accountServices, orderService } from '../services';
 import { getStartAndEndOfByTime } from '../utils/time';
+import { Twilio } from 'twilio';
+import dayjs from 'dayjs';
+const accountSid = 'ACe3fb52ccb075caca32e44905e4baf5fb';
+const authToken = 'ab3ecf45e8a759b71f25105953f01ce3';
 
 const formatRequestFilterGetOrders = (body) => {
     const newBody = _.cloneDeep(body);
@@ -126,6 +130,19 @@ export const updateById = async (req, res) => {
             handleData = { ...handleData, totalWithVat: madeVat };
         }
         const data = await orderService.updateById(req.params.id, handleData);
+        // không được phép xóa code bên dưới
+
+        // if (handleData.status == 2 && handleData.isCustomer == true) {
+        //     const client = new Twilio(accountSid, authToken);
+        //     await client.messages.create({
+        //         body: `${handleData.showroomName} xác nhận đặt lịch ${handleData.serviceType}, vào lúc ${dayjs(
+        //             handleData.appointmentSchedule,
+        //         ).format('HH:mm DD/MM/YYYY')}`,
+        //         from: '+16203028652',
+        //         to: `+84${handleData.number_phone}`,
+        //     });
+        // }
+
         res.json(data);
     } catch (errors) {
         res.status(400).json({
@@ -244,6 +261,28 @@ export const getShowroom = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             message: 'Đã có lỗi xảy ra!',
+        });
+    }
+};
+
+export const getAllNotificationOrder = async (req, res) => {
+    try {
+        const data = await orderService.notifiCationInOrder(req.body.showroomId);
+        res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi',
+        });
+    }
+};
+
+export const updateSeenNotification = async (req, res) => {
+    try {
+        const data = await orderService.updateSeenOrder(req.params.id);
+        res.json(data);
+    } catch (error) {
+        res.status(400).json({
+            error: 'lỗi',
         });
     }
 };

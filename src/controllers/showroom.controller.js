@@ -130,7 +130,8 @@ export const search = async (req, res) => {
 export const searchValueInShowroom = async (req, res) => {
     try {
         const data = await showroomService.searchValueInShowroom(req.query);
-        res.status(200).json(data);
+        const handleData = data.filter((showroom) => showroom.enabled == true);
+        res.status(200).json(handleData);
     } catch (error) {
         res.status(400).json({
             error,

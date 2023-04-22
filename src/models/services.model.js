@@ -5,17 +5,7 @@ const serviceSchema = mongoose.Schema({
     },
     icon: {
         type: String,
-    },
-    serviceTypes: {
-        type: [
-            {
-                typeName: {
-                    type: String,
-                },
-            },
-        ],
-        default: [],
-    },
+    }
 });
 
 const serviceModel = mongoose.model('Service', serviceSchema);

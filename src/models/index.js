@@ -12,3 +12,4 @@ module.exports.Service = require('./services.model');
 module.exports.Discount = require('./discount.model');
 module.exports.subService = require('./subService.model');
 module.exports.generalWarehouseModel = require('./generalWarehouse.model');
+module.exports.notifiPartModel = require('./notificationPart.model');

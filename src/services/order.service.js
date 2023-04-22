@@ -68,16 +68,16 @@ export const updateById = async (_id, data) => {
             _id,
             deleted: false,
         },
-        data,
+        { ...data, seen: true },
         {
             new: true,
         },
     );
 };
 
-export const getOderShowroom =async (data)=>{
-    return await OrderModel.find({showroomId:data});
-}
+export const getOderShowroom = async (data) => {
+    return await OrderModel.find({ showroomId: data });
+};
 
 export const getById = async (id) => {
     try {
@@ -132,8 +132,35 @@ const handleMaterialsData = (data, id) => {
         total: materials.total,
         totalWithVat: materials.totalWithVat,
         listMaterials,
+        seen: materials.seen,
+        isCustomer: materials.isCustomer,
         _id: id,
     };
 };
 
+export const notifiCationInOrder = async (showroomId) => {
+    return await OrderModel.aggregate([
+        {
+            $match: {
+                $and: [
+                    { showroomId: mongoose.Types.ObjectId(showroomId) },
+                    {
+                        seen: false,
+                    },
+                ],
+            },
+        },
+    ]);
+};
 
+export const updateSeenOrder = async (_id) => {
+    return await OrderModel.findOneAndUpdate(
+        {
+            _id,
+        },
+        { seen: true },
+        {
+            new: true,
+        },
+    );
+};

@@ -139,6 +139,14 @@ const orderSchema = mongoose.Schema(
             type: Number,
             default: 10,
         },
+        seen: {
+            type: Boolean,
+            default: false,
+        },
+        isCustomer: {
+            type: Boolean,
+            default: true,
+        },
     },
     {
         timestamps: true,
