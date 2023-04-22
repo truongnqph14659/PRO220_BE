@@ -51,7 +51,7 @@ export const showroomNearBy = (data) => {
                     coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)],
                 },
                 key: 'location',
-                maxDistance: 1000,
+                maxDistance: 2000,
                 distanceField: 'calculated',
                 spherical: true,
             },
