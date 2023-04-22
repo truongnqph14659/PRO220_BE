@@ -1,7 +1,11 @@
 import { notifiPartModel } from '../models';
 
 export const getAll = async () => {
-    return await notifiPartModel.find({});
+    return await notifiPartModel.aggregate([
+        {
+            $sort: { createdAt: -1 },
+        },
+    ]);
 };
 
 export const createNotification = async (data) => {

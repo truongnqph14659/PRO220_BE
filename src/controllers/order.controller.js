@@ -5,8 +5,8 @@ import { accountServices, orderService } from '../services';
 import { getStartAndEndOfByTime } from '../utils/time';
 import { Twilio } from 'twilio';
 import dayjs from 'dayjs';
-const accountSid = 'ACe3fb52ccb075caca32e44905e4baf5fb';
-const authToken = 'ab3ecf45e8a759b71f25105953f01ce3';
+const accountSid = 'ACb76ad637771531bc283f9fa05bb1e311';
+const authToken = '77d129cc22dc2fef65d93a66fd44c9e8';
 
 const formatRequestFilterGetOrders = (body) => {
     const newBody = _.cloneDeep(body);
@@ -131,18 +131,16 @@ export const updateById = async (req, res) => {
         }
         const data = await orderService.updateById(req.params.id, handleData);
         // không được phép xóa code bên dưới
-
         // if (handleData.status == 2 && handleData.isCustomer == true) {
         //     const client = new Twilio(accountSid, authToken);
         //     await client.messages.create({
-        //         body: `${handleData.showroomName} xác nhận đặt lịch ${handleData.serviceType}, vào lúc ${dayjs(
+        //         body: `${handleData.showroomName} xác đã nhận đặt lịch ${handleData.serviceType} của bạn, vào lúc ${dayjs(
         //             handleData.appointmentSchedule,
         //         ).format('HH:mm DD/MM/YYYY')}`,
-        //         from: '+16203028652',
+        //         from: '+16813346772',
         //         to: `+84${handleData.number_phone}`,
         //     });
         // }
-
         res.json(data);
     } catch (errors) {
         res.status(400).json({
