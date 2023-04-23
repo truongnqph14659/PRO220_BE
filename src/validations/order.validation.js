@@ -28,6 +28,7 @@ export const createOrder = {
         tg_nhan_xe: Joi.date().allow('', null),
         tg_tra_xe: Joi.date().allow('', null),
         isCustomer: Joi.boolean().empty(),
+        seen: Joi.boolean().empty(),
     }),
 };
 
@@ -51,6 +52,7 @@ export const updateOrderStatus = {
         showroomName: Joi.string().allow('', null),
         appointmentSchedule: Joi.date().allow('', null),
         isCustomer: Joi.boolean().empty(),
+        seen: Joi.boolean().empty(),
         serviceType: Joi.string().allow('', null),
     }),
 };
