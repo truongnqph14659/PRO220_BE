@@ -150,6 +150,9 @@ export const notifiCationInOrder = async (showroomId) => {
                 ],
             },
         },
+        {
+            $sort: { createdAt: -1 },
+        },
     ]);
 };
 
