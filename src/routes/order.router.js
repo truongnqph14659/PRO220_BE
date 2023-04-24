@@ -21,7 +21,7 @@ router.patch('/order-status/:id', validate(orderValidation.updateOrderStatus), o
 //customer
 router.post('/order-by-customer', orderController.create);
 router.get('/orders-customer/:accountId', orderController.getUserOrders);
-router.patch('/orders-customer/:id', validate(orderValidation.updateByIdOrder), orderController.updateById);
+router.patch('/orders-customer/:id', orderController.updateById);
 
 // thong ke
 router.post('/order/statistical-total', validate(orderValidation.totalOrderStatistical), orderController.getOrderTotal);

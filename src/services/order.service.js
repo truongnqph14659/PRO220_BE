@@ -13,10 +13,12 @@ export const getAll = async (filter) => {
 
 export const getUserOrders = async (id) => {
     try {
-        const data = await OrderModel.find({ accountId: id }).populate({
-            path: 'showroomId',
-            select: ['_id', 'nameShowroom', 'address', 'phone', 'images'],
-        });
+        const data = await OrderModel.find({ accountId: id })
+            .populate({
+                path: 'showroomId',
+                select: ['_id', 'nameShowroom', 'address', 'phone', 'images'],
+            })
+            .sort({ createdAt: -1 });
 
         return data.map((order) => {
             return {
