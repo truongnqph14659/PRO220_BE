@@ -1,27 +1,21 @@
+var mongoose_delete = require('mongoose-delete');
 import mongoose from 'mongoose';
-const materialsSchema = mongoose.Schema(
-    {
-        name: {
-            type: String,
-        },
-        price: {
-            type: Number,
-        },
-        quantity: {
-            type: Number,
-        },
-        image: {
-            type: String,
-        },
-        showroomId: {
-            type: mongoose.ObjectId,
-            ref: 'showroom',
-        },
+const materialsSchema = mongoose.Schema({
+    name: {
+        type: String,
     },
-    {
-        timestamps: true,
+    priceInitial: {
+        type: Number,
     },
-);
-
-const materialsModel = mongoose.model('materials', materialsSchema);
+    price: {
+        type: Number,
+    },
+    image: {
+        type: String,
+    },
+}, {
+    timestamps: true,
+}, );
+materialsSchema.plugin(mongoose_delete);
+const materialsModel = mongoose.model('Material', materialsSchema);
 module.exports = materialsModel;

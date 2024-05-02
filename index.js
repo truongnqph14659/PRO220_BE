@@ -9,31 +9,41 @@ import showroomRouter from './src/routes/showroom.router';
 import BannerRouter from './src/routes/banner.router';
 import routerMaterials from './src/routes/materials.router';
 import httpStatus from 'http-status';
+import cookiesParser from 'cookie-parser';
 import routerAccount from './src/routes/acount.router';
+import routerWarehouse from './src/routes/warehouse.router';
+import routerDistrict from './src/routes/district.router';
+import routerPayment from './src/routes/paymentVnpay.router';
+import routerRole from './src/routes/role.router';
+import routerPermission from './src/routes/permission.router';
+import routerPost from './src/routes/post.router';
+import routerService from './src/routes/service.router';
+
 const app = express();
 // const app = express();
 
 //parse json request body
 app.use(express.json());
-
+app.use(cookiesParser());
 //use morgan log info when get data
 app.use(morgan('tiny'));
-
-app.use(cors());
+app.use(cors({ origin: ['http://127.0.0.1:5173', 'http://localhost:3000'], credentials: true }));
 app.options('*', cors());
-
 //use routers
 
+app.use('/api', routerPayment);
 app.use('/api', BannerRouter);
-
 app.use('/api', orderRouter);
 app.use('/api', routerAccount);
 app.use('/api', showroomRouter);
 app.use('/api', routerMaterials);
-
-app.use('/', (req, res) => {
-    res.json('Hello World');
-});
+app.use('/api', routerWarehouse);
+app.use('/api', routerWarehouse);
+app.use('/api', routerDistrict);
+app.use('/api', routerRole);
+app.use('/api', routerPermission);
+app.use('/api', routerPost);
+app.use('/api', routerService);
 
 // parse urlencoded request body
 app.use(
@@ -52,7 +62,7 @@ try {
     // connect db atlas ket noi db atlas
     (async () => {
         const url = `mongodb+srv://${process.env.DATABASE}:${process.env.PASSWORD}@cluster0.utwdlzd.mongodb.net/web_app`;
-        
+
         console.log('URL', url);
         await mongoose.connect(url);
         console.log('CONNECTED SUCCES DB');

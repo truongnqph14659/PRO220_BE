@@ -1,8 +1,36 @@
 import mongoose from 'mongoose';
+import { ORDER_STATUS, SEVICE_TYPE } from '../constans/order';
+import { string } from 'joi';
+var mongoose_delete = require('mongoose-delete');
 
 const orderSchema = mongoose.Schema(
     {
-        date: {
+        name: {
+            type: String,
+        },
+        address: {
+            type: String,
+        },
+        email: {
+            type: String,
+        },
+        number_phone: {
+            type: String,
+        },
+        status: {
+            default: ORDER_STATUS.initial.value,
+            type: Number,
+        },
+        price: {
+            type: Number,
+        },
+        subPrice: {
+            type: Number,
+        },
+        total: {
+            type: Number,
+        },
+        appointmentSchedule: {
             type: Date,
         },
         serviceType: {
@@ -11,17 +39,52 @@ const orderSchema = mongoose.Schema(
         description: {
             type: String,
         },
-        user: {
+        eventId: {
             type: mongoose.ObjectId,
-            ref: 'user',
+            ref: 'eventId',
         },
-        cateStore: {
+        accountId: {
             type: mongoose.ObjectId,
-            ref: 'showroom',
+            ref: 'Account',
         },
-        cateService: {
+        showroomId: {
             type: mongoose.ObjectId,
-            ref: 'cateService',
+            ref: 'Showroom',
+        },
+        materialIds: {
+            type: Array,
+            default: [],
+            ref: 'Material',
+        },
+        materials: [
+            {
+                materialId: {
+                    type: mongoose.ObjectId,
+                    ref: 'Material',
+                },
+                qty: {
+                    type: Number,
+                },
+                price: {
+                    type: Number,
+                },
+            },
+        ],
+        reasons: {
+            type: Array,
+            default: [],
+        },
+        //km xe chay
+        km: {
+            type: String,
+        },
+        // loai xe may
+        vehicleType: {
+            type: Number,
+        },
+        //bien so xe
+        licensePlates: {
+            type: String,
         },
     },
     {
@@ -29,8 +92,8 @@ const orderSchema = mongoose.Schema(
     },
 );
 
-// export default mongoose.model('Order', orderSchema) //no cai nay xoa r ma???
+orderSchema.plugin(mongoose_delete);
 
-const OrderModel = mongoose.model('OrderModel', orderSchema);
+const OrderModel = mongoose.model('Order', orderSchema);
 
 module.exports = OrderModel;
